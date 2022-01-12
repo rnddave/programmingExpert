@@ -204,4 +204,22 @@ animals = [Duck(), Duck(), Whale()]
 
 for animal in animals:
     animal.swim()
+    # animal.fly()          = this is the Duck typing, python assumes it will be able to run because it looks syntactically correct, until it tries to run it
+
+    """
+    >>>> OUTPUT <<<<
+
+swimming duck
+flying duck
+swimming duck
+flying duck
+swimming whale
+
+Traceback (most recent call last):
+  File "/Users/dickinsd/Github/programmingExpert/307__inheritance.py", line 201, in <module>
     animal.fly()
+AttributeError: 'Whale' object has no attribute 'fly'
+    
+    """
+
+############ PRACTICE ###########
