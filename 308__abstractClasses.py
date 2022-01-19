@@ -147,7 +147,16 @@ class RandomGuesser(AbstractGame):
         
         self.end()
 
-game = RandomGuesser(2)
-game.play()
-                
+class AnotherGame(AbstractGame):
+    pass
 
+games = [RandomGuesser(2), AnotherGame()]
+
+for game in games:
+    game.start()
+                
+"""
+non-abstract classes are also called 'concerete classes'
+
+if we had a bunch of different games, we don't need to know anything about them, we just call the start and see what happens
+"""
