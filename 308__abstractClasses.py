@@ -160,3 +160,38 @@ non-abstract classes are also called 'concerete classes'
 
 if we had a bunch of different games, we don't need to know anything about them, we just call the start and see what happens
 """
+
+## this is a complicated topic, it might take a few times to really understand this: 
+
+####################### PRACTICE #######################
+
+## 308.05 - Abstract Animal Class
+
+"""
+create ABSTRACT [animal] class
+contains following methods:
+- [sleep()] concrete method that outputs "ZzzZzz" to console
+- [animal_sound()] abstract method that raises an NotImplementedError if called
+- [wake_up()] concrete method that calls [animal_sound()] and output " I am awake!" to the console 
+
+After creating, create a subclass named Lion() that implements the Animal() class. 
+When [animal_sound()] is called, an instance of the Lion() class should output "Roar!"
+"""
+
+class Animal:
+    def sleep(self):
+        print("ZzzZzz")
+
+    def animal_sound(self):
+        raise NotImplementedError("Method not implemented.")
+
+    def wake_up(self):
+        self.animal_sound()
+        print("I am awake!")
+
+
+class Lion(Animal):
+    def animal_sound(self):
+        print("Roar!")
+
+        
