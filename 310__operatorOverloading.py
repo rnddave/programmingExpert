@@ -296,6 +296,9 @@ class Page:
     def __str__(self):
         return f"Page({self.text}, {self.page_number})"
 
+    def __repr__(self):         # outputs the machine representation of an object (useful for debugging)
+        return self.__str__()
+
 class Book:
     def __init__(self, title, author, pages, id_number):
         self.title = title
@@ -314,8 +317,21 @@ class Book:
 
         return output
 
+    def __repr__(self):         # outputs the machine representation of an object (useful for debugging)
+        return f"Book({self.id_number})"
+
+###>>>#####>>>>#####>>>
+
 page1 = Page("Page ONE", 1)
 page2 = Page("The second page", 2)
 book = Book("the best book", "Tim", [page1, page2], 1)
 print(page1, page2)
 print(book)
+
+##### looking at the repr
+
+print(repr(book))       # Book(1)
+print(repr(page1))      # Page(Page ONE, 1)
+
+###################### TIME FOR PRACTICE ######################
+
