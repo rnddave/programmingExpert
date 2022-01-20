@@ -203,11 +203,6 @@ class Line:
         self.point1 = point1
         self.point2 = point2
 
-    def __floordiv__(self, factor):       # floordiv = integer division = // [ basically rounding up ]
-        new_point1 = (self.point1[0] // factor, self.point1[1] // factor)
-        new_point2 = (self.point2[0] // factor, self.point2[1] // factor)
-        return Line(new_point1, new_point2)
-
     def __len__(self):
         distance_x = (self.point1[0] - self.point2[0]) ** 2
         distance_y = (self.point1[1] - self.point2[1]) ** 2
@@ -215,12 +210,112 @@ class Line:
         return round(distance)
 
 line1 = Line((10, 5), (20, 10))
-line2 = line1 // 2
-print(line2.point1, line2.point2)
-print(len(line1))
+line2 = Line((10, 5), (20, 10))
+print(line1 == line2)           # False [ this is because although have same values, they are different objects]
+                                # because we actually do want to compare the values, rather than the objects.
+
+################## SO LETS FIX THIS >>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+class Line: 
+    def __init__(self, point1, point2):
+        self.point1 = point1
+        self.point2 = point2
+
+    def __len__(self):
+        distance_x = (self.point1[0] - self.point2[0]) ** 2
+        distance_y = (self.point1[1] - self.point2[1]) ** 2
+        distance = math.sqrt(distance_x + distance_y)
+        return round(distance)
+
+    def __eq__(self, other):           ## equals
+        if not isinstance(other, Line):
+            return False
+
+        return self.point1 == other.point1 and self.point2 == other.point2
+
+    def __ne__(self, other):           ## not equals
+        return not self.__eq__(other)
+
+line1 = Line((10, 5), (20, 10))
+line2 = Line((10, 5), (20, 10))
+line3 = Line((10, 4), (22, 10))
+print(line1 == line2)                   # True
+print(line3 != line2)                   # True
 
 ## __gt__ & __lt__ (other comparison)
 
+class Line: 
+    def __init__(self, point1, point2):
+        self.point1 = point1
+        self.point2 = point2
 
+    def __len__(self):
+        distance_x = (self.point1[0] - self.point2[0]) ** 2
+        distance_y = (self.point1[1] - self.point2[1]) ** 2
+        distance = math.sqrt(distance_x + distance_y)
+        return round(distance)
+
+    def __eq__(self, other):           ## equals
+        if not isinstance(other, Line):
+            return False
+
+        return self.point1 == other.point1 and self.point2 == other.point2
+
+    def __ne__(self, other):           ## not equals
+        return not self.__eq__(other)
+
+    def __gt__(self, other):            # greater than
+        return len(self) > len(other)
+
+    def __ge__(self, other):            # greater than OR equal to       
+        return len(self) >= len(other)
+
+    def __lt__(self, other):            # less than   
+        return len(self) < len(other)
+
+    def __le__(self, other):            # less than OR equal to
+        return len(self) <= len(other)
+
+line1 = Line((10, 5), (20, 10))
+line2 = Line((10, 5), (20, 10))
+line3 = Line((10, 4), (22, 10))
+
+print(line1 > line3)                # False
+print(line2 < line3)                # True
 
 ## __str__ & __repr__ (string() & repr())
+
+class Page:
+    def __init__(self, text, page_number):
+        self.text = text
+        self.page_number = page_number
+
+    def __len__(self):
+        return len(self.text)
+
+    def __str__(self):
+        return f"Page({self.text}, {self.page_number})"
+
+class Book:
+    def __init__(self, title, author, pages, id_number):
+        self.title = title
+        self.author = author
+        self.pages = pages
+        self.id_number = id_number
+
+    def __len__(self):
+        return len(self.pages)
+
+    def __str__(self):
+        output = f"Book({self.title}, {self.author}, {self.id_number})"
+
+        for page in self.pages:
+            output += "\n" + str(page)
+
+        return output
+
+page1 = Page("Page ONE", 1)
+page2 = Page("The second page", 2)
+book = Book("the best book", "Tim", [page1, page2], 1)
+print(page1, page2)
+print(book)
