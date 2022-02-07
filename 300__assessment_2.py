@@ -32,7 +32,7 @@ class Student:
     def __init__(self, name, grade):
         self.name = name
         self.grade = grade
-        pass
+        Student.all_students.append(self)
 
     # - a static method called [calculate_average_grade(students)]
     @staticmethod
