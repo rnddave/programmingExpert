@@ -63,6 +63,7 @@ class Rectangle(Polygon):
 
     def get_sides(self):
         return [self.width, self.height, self.width, self.height]
+        # we need to duplicate  height/width as we know there are 4 sides, so take in 2 sides and then duplicate (this is used again in square)
 
     def get_area(self):
         return get_rectangle_area(self.width, self.height)
@@ -77,6 +78,8 @@ class Square(Rectangle):
     def __init__(self, length):
         # Your [Square] class should only have an implementation for its constructor, and rely on the [Rectangle] superclass for implementations of [get_sides()] and [get_area()]
         super().__init__(length, length)
+        # what we see here, is that we will pass 2x measurement to the method in Rectangle, that will correspond with the 2x arguments it expects (height, width)
+        # we know a square is the same on all sides, however, by passing the same measurement, duplicated, to existing code, we can use that code to perform the math
 
 
     # Use this function in your solution.
