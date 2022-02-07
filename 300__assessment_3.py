@@ -28,8 +28,14 @@ import math
 
 
 class Polygon:
-    # Write your code here.
-    pass
+    def get_sides(self):
+        raise NotImplementedError
+
+    def get_area(self):
+        raise NotImplementedError
+
+    def get_perimeter(self):
+        return sum(self.get_sides())
 
 
 class Triangle(Polygon):
