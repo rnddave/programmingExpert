@@ -26,6 +26,7 @@ defined to keep track of students:
 """
 
 class Student:
+    # - class variable called [all_students]
     all_students []
 
     def __init__(self, name, grade):
@@ -33,8 +34,19 @@ class Student:
         self.grade = grade
         pass
 
+    # - a static method called [calculate_average_grade(students)]
+    @staticmethod
     def calculate_average_grade(students):
-        pass
+        # -- if no student in list, then return [-1]
+        if len(students) == 0:
+            return -1
+
+        # -- return the average grade for those students
+        total = 0
+        for student in students:
+            total += student.grade
+        return total / len(students)
+
 
     def get_average_grade():
         pass
