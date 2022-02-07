@@ -25,7 +25,6 @@ Your [Square] class should only have an implementation for its constructor, and 
 
 import math
 
-
 class Polygon:
     def get_sides(self):
         # Your [Polygon] class should raise a [NotimplementedError] when the [get_sides()] methods are called.
@@ -50,18 +49,37 @@ class Triangle(Polygon):
         side1, side2, side3 = self.sides
         return get_triangle_area(side1, side2, side3)
 
+"""
+Your [Triange] and [Rectangle] classes should both implement the following methods: 
+-- [get_sides()] = return a list containing the lengths of the sides of the shape
+-- [get_area()] = area of the polygon
+"""
 
 class Rectangle(Polygon):
-    # Write your code here.
-    pass
+    # Your [Rectangle] class should have a constructor that takes 2 arguments, which will be the [width] and [height] of the [Rectangle]
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height  
 
+    def get_sides(self):
+        return [self.width, self.height, self.width, self.height]
+
+    def get_area(self):
+        return get_rectangle_area(self.width, self.height)
+"""
+Your [Triange] and [Rectangle] classes should both implement the following methods: 
+-- [get_sides()] = return a list containing the lengths of the sides of the shape
+-- [get_area()] = area of the polygon
+"""
 
 class Square(Rectangle):
-    # Write your code here.
-    pass
+    # Your [Square] class should have a constructor that takes 1 argument which will be the length of each side of the [Square]
+    def __init__(self, length):
+        # Your [Square] class should only have an implementation for its constructor, and rely on the [Rectangle] superclass for implementations of [get_sides()] and [get_area()]
+        super().__init__(length, length)
 
 
-# Use this function in your solution.
+    # Use this function in your solution.
 def get_triangle_area(side1, side2, side3):
     semi_perimeter = (side1 + side2 + side3) / 2
     return math.sqrt(
@@ -72,6 +90,6 @@ def get_triangle_area(side1, side2, side3):
     )
 
 
-# Use this function in your solution.
+    # Use this function in your solution.
 def get_rectangle_area(width, height):
     return width * height
