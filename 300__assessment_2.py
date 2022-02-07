@@ -27,7 +27,7 @@ defined to keep track of students:
 
 class Student:
     # - class variable called [all_students]
-    all_students []
+    all_students = []
 
     def __init__(self, name, grade):
         self.name = name
@@ -48,9 +48,19 @@ class Student:
         return total / len(students)
 
 
-    def get_average_grade():
-        pass
+    # - class method called [get_average_grade()]
+    @classmethod
+    def get_average_grade(cls):
+        # -- return average grade for all created students
+        return cls.calculate_average_grade(cls.all_students)
 
-    def get_best_student():
-        pass
+    # - - class method called [get_best_student()]
+    @classmethod
+    def get_best_student(cls):
+        best_student = None
+
+        for student in cls.all_students:
+            if best_student == None:
+                best_student = student
+        return best_student
 
