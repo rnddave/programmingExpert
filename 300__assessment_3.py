@@ -5,7 +5,6 @@ create 4x class [Polygon], [Triangle], [Rectangle], [Square]
 
 The [Triangle] and [Rectangle] class should be subclasses of [Polygon] and [Square] should be a subclass of [Rectagle] 
 
-
 Your [Polygon] class should raise a [NotimplementedError] when the [get_area()] and [get_sides()] methods are called. 
 However it should correctly return the perimeter of the polygon when [get_perimeter()] is called. Treat [Polygon] class as an *abstract* class. 
 
@@ -29,18 +28,27 @@ import math
 
 class Polygon:
     def get_sides(self):
+        # Your [Polygon] class should raise a [NotimplementedError] when the [get_sides()] methods are called.
         raise NotImplementedError
 
     def get_area(self):
+        # Your [Polygon] class should raise a [NotimplementedError] when the [get_area()] methods are called.
         raise NotImplementedError
 
     def get_perimeter(self):
         return sum(self.get_sides())
 
-
 class Triangle(Polygon):
-    # Write your code here.
-    pass
+    # Your [Triangle] class should have a constructor that takes 3 arguments, which will be the len of the 3x side. 
+    def __init__(self, side1, side2, side3):
+        self.sides = [side1, side2, side3]
+
+    def get_sides(self):
+        return self.sides
+
+    def get_area(self):
+        side1, side2, side3 = self.sides
+        return get_triangle_area(side1, side2, side3)
 
 
 class Rectangle(Polygon):
