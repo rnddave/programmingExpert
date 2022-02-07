@@ -22,4 +22,23 @@ defined to keep track of students:
 -- return student object with the best grade out of all the currently created students
 -- if no students created, the return [None]
 
+
 """
+
+class Student:
+    all_students []
+
+    def __init__(self, name, grade):
+        self.name = name
+        self.grade = grade
+        pass
+
+    def calculate_average_grade(students):
+        pass
+
+    def get_average_grade():
+        pass
+
+    def get_best_student():
+        pass
+
