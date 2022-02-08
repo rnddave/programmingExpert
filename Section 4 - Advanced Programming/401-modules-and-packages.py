@@ -84,3 +84,35 @@ a common practice is to have one module that imports all the other modules, then
 
 #---------------------------------------------------------
 
+"""
+
+sometimes you want to run code in the module, but not when it is imported
+
+you need additional code: 
+
+if __name__ == "__main__":
+    print("hello world")
+
+"""
+
+#---------------------------------------------------------
+
+if __name__ == "__main__":
+    print("hello world (from main)")
+
+#---------------------------------------------------------
+
+"""
+
+let's import a whole package: 
+
+first we need to create a§ directory, within the directory, we need to create a file called 
+
+__init__.py
+
+"""
+
+#---------------------------------------------------------
+
+import code401
+
