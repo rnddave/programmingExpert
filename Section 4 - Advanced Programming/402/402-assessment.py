@@ -41,6 +41,7 @@ print(len(words))                               # 179
 This above passed the code test, as follows in the proposed solutions
 """
 
+"""
 # solution 1
 
 text = ""
@@ -73,3 +74,21 @@ empty_strings = words.count("")
 number_of_words = len(words) - empty_strings
 
 print(number_of_words)
+
+"""
+
+# _+_+_+_+_+_+_+_+_+_+_+_+_+_
+
+"""
+402.3 >> writing Files
+
+create a new file names programmingExpert.txt 
+
+contains the squares of numbers in range 1-50, each on a new line: 
+
+"""
+
+with open("squaredFile.txt", "w") as file:
+    for num in range(1, 51):
+        square = num ** 2
+        file.write(str(square) + "\n")
