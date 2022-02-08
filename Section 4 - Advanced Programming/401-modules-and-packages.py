@@ -119,4 +119,25 @@ import code401
                 # A
                 # B
 
+code401.a.A()
+code401.b.B()
+                # output as follows:
+                # A is a
+                # B is b but not A
+
+"""
+In the __initi__.py
+
+We could also do as follows: 
+
+from code401.a import A
+from code401.b import B
+
+which would tidy our code:
+"""
+code401.A()
+code401.B()
+                # output as follows:
+                # A is a
+                # B is b but not A
 
