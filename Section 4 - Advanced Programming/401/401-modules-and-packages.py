@@ -141,3 +141,18 @@ code401.B()
                 # A is a
                 # B is b but not A
 
+#---------------------------------------------------------
+
+"""
+until this point, we have been looking at absolute imports,
+
+but now we're going to look at relative imports (we give a path)
+
+from . import X
+
+what this means is it says from [ . ] = this path, per unix
+
+"""
+
+#---------------------------------------------------------
+
