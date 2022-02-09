@@ -50,7 +50,7 @@ print(result(4))                # 8 (2x4)
 # wtf - this bit is 'abstract' !!
 
 ###################################
-# practice >> 404/05 - lambda Function
+# practice >> 404.05 - lambda Function
 ###################################
 
 """
