@@ -353,6 +353,7 @@ in the current vector and the vector represented by the vector parameter]
 
 __mul__(self, vector) [returns the dot product of the current vector and the vector represented by the vector parameter
 the dot product of two vectors is equal to the sum of the multiplication of their individual components]
+
 """
 
 class Vector:
