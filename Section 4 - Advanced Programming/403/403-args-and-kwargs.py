@@ -14,6 +14,12 @@ def pretty_print(*args, **kwargs):
 
 pretty_print(*["H", "e", "l", "l", "o", "world"], end="!\n")
 
+"""
+***************
+H e l l o world!
+***************
+"""
+
 # _+_+_+_+_+_+_+_+_+_+_
 
 # "*args        = star-args" 
@@ -128,3 +134,52 @@ print("\n\n - breaking the output up a bit \n")
 # OR - we could just use *values, which will unpack the list as follows: 
 
 print(*values)                      # 1 4 5 6 2 4 2 7 4 7 4 6 345 34
+
+#### new example
+
+def test(p1, *args, **kwargs):      # 3 at least one positional argument, any number of arguments, any number of keyword arguments
+    print(p1, args, kwargs)
+
+values = [1, 2, 3, 4]
+kwargs = {"s": 1, "hello": 4}
+test(4, *values, **kwargs)          # 4 (1, 2, 3, 4) {'s': 1, 'hello': 4}
+
+# Exercise / Practice
+###################################
+# 403.02: what get's printed out?
+###################################
+
+print(*[1, 2, 3, 4], **{'end': "|", 'sep': "*"})
+
+# no idea, so I ran it in code = 1*2*3*4|
+
+"""
+* [ unpacks each item the list] 1 2 3 4
+** unpacks the dictionary, but the print function reads what is unpacked as follows
+
+end = | (instead of the defaul \n)
+sep = * (instead of the default " " (space))
+
+ergo >> 1*2*3*4|
+"""
+
+###################################
+# 403.03: *Args and **Kwargs
+###################################
+
+"""
+write a function name [get_args_and_kwargs] that accept unlimited number of positional and keyword arguments
+- return [True] if at least [4] total arguments and if keyword [num] exists, is a number and is larger than [5].
+- otherwise return [False]
+
+- also need to handle errors
+"""
+
+def get_args_and_kwargs(*args, **kwargs):
+    number_of_args = len(args) + len(kwargs)
+    num = kwargs.get("num", 0)
+
+    if not isinstance(num, int) and not isinstance(num, float):
+        return False
+
+    return number_of_args >= 4 and num > 5
