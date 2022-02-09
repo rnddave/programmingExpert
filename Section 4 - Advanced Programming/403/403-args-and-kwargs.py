@@ -62,9 +62,69 @@ def sum_items4(a, b, c):
     print(a, b, c)                      
     return a + b + c            
 
-args = [12, 154, 93]
-
+args = [12, 154, 93]                    # list
 x = sum_items4(*args)                   # 12 154 93
 print(x)                                # 259
 
+args2 = (12, 154, 93)                   # tuple
+y = sum_items4(*args2)                  # 12 154 93
+print(y)                                # 259
 
+kwargs = {"a": 5, "c": 34, "b": 35}
+z = sum_items4(**kwargs)                # the double ** = unpack a dictonary
+print(z)
+
+def sum_items5(p1, p2, a=None, b=None, c=None):
+    print(p1, p2, a, b, c)
+    return a + b + c + p1 + p2
+
+args = [1, 2]
+kwargs = {"a": 5, "c": 34, "b": 35}
+x2 = sum_items5(*args, **kwargs)        # 1 2 5 35 34
+print(x2)                               # 77
+
+# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+def sum_items6():
+    pass
+
+# let us imagine you have many values: 
+
+values = [1, 4, 5, 6, 2, 4, 2, 7, 4, 7, 4, 6, 345, 34]
+
+# we can see the values with the print statement, but this also shows the list structure: 
+print(values)       # [1, 4, 5, 6, 2, 4, 2, 7, 4, 7, 4, 6, 345, 34]
+
+# so we want to get rid of the list, we could do: 
+
+for val in values:
+    print(val)
+
+"""
+1
+4
+5
+6
+2
+4
+2
+7
+4
+7
+4
+6
+345
+34
+"""
+# but we don't want each item on own list, so we can start adding complexity: 
+
+for val in values:
+    print(val, end=" ")             # 1 4 5 6 2 4 2 7 4 7 4 6 345 34
+
+###
+print("\n\n - breaking the output up a bit \n")
+###
+
+# OR - we could just use *values, which will unpack the list as follows: 
+
+print(*values)                      # 1 4 5 6 2 4 2 7 4 7 4 6 345 34
