@@ -68,3 +68,26 @@ write a lambda function(s)
 -- [create_set]
 """
 
+# solution 1
+
+add_values = lambda x, y, z : x + y + z
+
+max_length = lambda x, y: max(len(x), len(y))
+
+create_set = lambda x, y: set(x).union(y)
+
+# solution 2
+
+add_values = lambda x, y, z : sum([x, y, z])
+
+max_length = lambda x, y: max(len(x), len(y))
+
+create_set = lambda x, y: set(x + y)
+
+# solution 3
+
+add_values = lambda x, y, z : sum([x, y, z])
+
+max_length = lambda x, y: max(len(x), len(y))
+
+create_set = lambda x, y: set(x) | set(y)
