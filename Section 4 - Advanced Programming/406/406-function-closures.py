@@ -114,7 +114,7 @@ print(count(1))
 def outer():
     def inner():
         def inner2():
-            nonlocal x
+            nonlocal x                  # this will cause the x to reference the closest variable
             x = 2
             print("Inner2:\t", x)
 
@@ -131,6 +131,74 @@ outer()
 Inner2:  2
 Inner:   2
 Outer:   4
+"""
+
+###################################
+# 406.01 - what is the output?
+###################################
+
+def a(x):
+    def b(x):
+        print(x)
+
+    return b
+
+a("b")("a")
+
+"""
+I incorrectly guessed = "a"
+
+infact it is [ a ] without the quotes
+"""
+
+###################################
+# 406.02 - what is the output?
+###################################
+
+
+def foo(x):
+    def bar():
+        nonlocal x
+        print(x)
+        x = 1
+
+    print(x)
+    return bar
+
+foo(3)()
+
+"""
+my guess is 
+3
+3
+
+and surprisingly, I am correct.
+"""
+
+###################################
+# 406.03 - what is the output?
+###################################
+
+def foo(x, y):
+    def bar():
+        nonlocal y
+        x = 3
+        y *= 5
+
+    bar()    
+    return x, y
+
+print(foo(4, 5))
+
+"""
+my guess: 
+
+4 25
+
+INCORRECT: 
+
+the actual output is a tuple: 
+(4, 25)
 """
 
 
