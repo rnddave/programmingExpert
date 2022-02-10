@@ -217,12 +217,12 @@ class Range:
         return self
 
     def __next__(self):
-        if self.step > 0 and self.current_value >= self.stop:
+        if self.step > 0 and self.current_value >= self.stop:           # this is how we know it reaches stop value
             raise StopIteration
-        elif self.step < 0 and self.current_value <= self.stop:
+        elif self.step < 0 and self.current_value <= self.stop:         # this threw me, but it needds to be able to accept negative numbers as well 
             raise StopIteration
 
         self.current_value += self.step
 
-        return self.current_value - self.step
+        return self.current_value - self.step                           # threw me, revert to last acceptable current_value
 
