@@ -131,8 +131,10 @@ for num in nums:
 """
 new examples
 
-we're going to add the iteraator into the same class
+we're going to add the iteraator into the same class (but this is not good practice)
 """
+
+print()
 
 class Numbers2:
     def __init__(self, num1, num2, num3):
@@ -141,7 +143,7 @@ class Numbers2:
         self.num3 = num3
 
     def __iter__(self):
-        self.count = 0
+        self.current = 0
         return self
 
     def __next__(self):
@@ -155,14 +157,72 @@ class Numbers2:
         else:
             raise StopIteration
 
+nums = Numbers2(1, 2, 3)
 
+for val in nums:
+    print(val)
 
+"""
+why isn't this good practice? 
 
+we cannot call the same iter from a different object
 
+this is basically because it will be the same object, not a different object 
 
+this would keeep resetting the self.current for example
 
+"""
 
+# PRACTICE
 
+###################################
+# 408.01 - what is the output?
+###################################
 
+string = "iterable"
+string_itr = iter(string)
+string.__iter__().__next__()
+next(string_itr)
 
+for char in string_itr:
+    print(char)
+    break
+
+"""
+guess: 
+ t
+
+Somehow - correct - I think more a guess than anything else
+
+"""
+###################################
+# 408.03 - Range Iterator
+###################################
+"""
+write a class based iterator names [Range]
+- initialized by passing three integer values (start, stop, step)
+- should mimc [range] function
+- always accept 3 integer values
+
+"""
+
+class Range:
+    def __init__(self, start, stop, step):
+        self.start = start
+        self.stop = stop
+        self.step = step
+
+    def __iter__(self):
+        self.current_value = self.start
+        return self
+
+    def __next__(self):
+        if self.step > 0 and self.current_value >= self.stop:
+            raise StopIteration
+        elif self.step < 0 and self.current_value <= self.stop:
+            raise StopIteration
+
+        self.current_value += self.step
+
+        return self.current_value - self.step
 
