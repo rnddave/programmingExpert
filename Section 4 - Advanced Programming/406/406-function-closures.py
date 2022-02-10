@@ -78,7 +78,7 @@ print(add_value(9))
 everytime we call add_value, we add a new item to the list
 
 we're kind of mimicing the use of a class as follows
-"""
+
 
 class Collection: 
     def __init__(self):
@@ -88,8 +88,23 @@ class Collection:
         self.lst2.append(value)
         return self.lst2
 
-add_value = Collection(2)
-print(add_value(16))
+"""
+
+def counter(start):
+    count = start
+
+    def increment(value):
+        nonlocal count          # makes this variable not local to this function,
+                                # therefore reference the outer functions variable
+                                # without this [nonlocal] keyword, this will not work,
+                                # because we are trying to modify an immutable datatype
+        count += value
+        return count
+
+    return increment
+
+count = counter(2)
+print(count(1))
 
 
 
