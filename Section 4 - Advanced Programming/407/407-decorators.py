@@ -221,8 +221,28 @@ write a decorator function named [print_return_value] that prints the return val
 
 your decorator should work on any function regardless of the number of paremeters
 """
+def print_return_value(func):
+    def wrapper(*args, **kwargs):
+        return_value = func(*args, **kwargs)
+        print(return_value)
+        return return_value 
 
+    return wrapper
 
+"""
+this one was much easier,first attempt = passed
+
+solutions follow
+"""
+# solution 1
+
+def print_return_value(func):
+    def wrapper(*args, **kwargs):
+        return_value = func(*args, **kwargs)
+        print(return_value)                     # amazingly, the ssame, but alos, possibly the simplest practice question so far!!
+        return return_value
+
+    return wrapper
 
 
 
