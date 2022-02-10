@@ -128,6 +128,32 @@ print()                         # just breaking up output from earlier code
 for num in nums:
     print(num)
 
+"""
+new examples
+
+we're going to add the iteraator into the same class
+"""
+
+class Numbers2:
+    def __init__(self, num1, num2, num3):
+        self.num1 = num1
+        self.num2 = num2
+        self.num3 = num3
+
+    def __iter__(self):
+        self.count = 0
+        return self
+
+    def __next__(self):
+        self.current += 1
+        if self.current == 1:
+            return self.num1
+        elif self.current == 2:
+            return self.num2
+        elif self.current == 3:
+            return self.num3
+        else:
+            raise StopIteration
 
 
 
