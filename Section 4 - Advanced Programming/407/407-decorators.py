@@ -60,5 +60,61 @@ loop(1000000)
 """
 OUTPUT >>>
 
+Args: (12,) Kwargs: {}
+Time taken to execute: 0.95367431640625 microseconds
+Args: (1000000,) Kwargs: {}
+Exception ignored: n is too large to loop through!
+"""
 
 """
+these are functions, used to call other functions (??)
+
+sit on top of a function
+- take it in
+- perform checks
+- then call it
+
+behind the scenes python magic 
+
+decorator uses a nested function
+"""
+
+def decorator(func): 
+    def wrapper():          # this needs to take the same as the function as parameters
+        print("Wrapper function called func!")
+        result = func()
+        return result
+        
+    return wrapper
+
+@decorator
+def foo():
+    print("foo")
+
+foo()
+"""
+Wrapper function called func!
+foo
+"""
+
+# what's going on here? 
+"""
+foo()
+get's passed to decorator
+"""
+
+# we use this to either:
+
+"""
+>> enforce some behaviour 
+>> to do something before or after the function was run
+"""
+
+
+
+
+
+
+
+
+
