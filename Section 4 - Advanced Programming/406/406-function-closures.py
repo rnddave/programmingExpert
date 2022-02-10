@@ -5,6 +5,9 @@ tricky subject
 
 """
 
+from re import X
+
+
 def outer(x, y):
     def nested():
         return x + y
@@ -106,6 +109,29 @@ def counter(start):
 count = counter(2)
 print(count(1))
 
+#################################
+
+def outer():
+    def inner():
+        def inner2():
+            nonlocal x
+            x = 2
+            print("Inner2:\t", x)
+
+        x = 3
+        inner2()
+        print("Inner:\t", x)
+    
+    x = 4
+    inner()
+    print("Outer:\t", x)
+
+outer()
+"""
+Inner2:  2
+Inner:   2
+Outer:   4
+"""
 
 
 
