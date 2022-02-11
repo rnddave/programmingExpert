@@ -24,5 +24,7 @@ Bytecode =
 - lower-level language that can be understood by an interpreter
 
 @actually - this blurb is simple enough, but what does Tim have in store for us? 
+
+Python has multiple interpreters = different implementations of the python language 
 """
 
