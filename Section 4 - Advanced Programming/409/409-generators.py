@@ -162,6 +162,29 @@ write generator[ new_range ]
 - should mimic the range() function
 """
 
+def new_range(start, stop, step):
+    current = start
+
+    while True:
+        if step < 0 and current <= stop:
+            break
+        if step > 0 and current >= stop:
+            break
+
+        yield current
+        current += step
+
+
+##############
+# solution from Programming Expert
+
+def new_range(start, stop, step):
+    for i in range(start, stop, step):
+        yield i
+    
+# = wow!
+
+
 
 
 
