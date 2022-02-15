@@ -451,3 +451,47 @@ new example; 1,2,3,4,5 (print)
 5.5
 7.5
 """
+
+# let's trying a lock - cannot move forward without the lock (kind of what I tried, but didn't work.)
+
+sleep(2)
+print("let's try the lock\n\n")
+from threading import Thread, Lock
+
+mutex = Lock()
+
+def t5(lock):
+    print("starting t5")
+    lock.acquire()
+    sleep(1)
+    print("t5")
+    lock.release()
+
+def t6(lock):
+    print("starting t6")
+    lock.acquire()
+    sleep(1)
+    print("t6")
+    lock.release()
+
+lock = Lock()
+thread5 = Thread(target=t5, args=(lock, ))
+thread6 = Thread(target=t6, args=(lock, ))
+
+thread5.start()             # t1
+thread6.start()             # t2
+
+print()
+
+"""
+output ==== 
+
+let's try the lock
+
+
+starting t5
+starting t6
+
+t5
+t6
+"""
