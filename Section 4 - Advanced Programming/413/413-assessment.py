@@ -13,6 +13,7 @@ Locks, Delays, .join()
 import threading
 from time import sleep
 
+
 def t1():
     sleep(1)
     print("thread 1")
@@ -226,3 +227,58 @@ thread1.join()                                                                  
 thread2.join()
 thread3.join()
 thread4.join()
+
+###################################
+# 413.04 - Foo Bar multi-threaded
+###################################
+
+"""
+FOO BAR - MULTI-THREADED
+
+- write a program
+- ask user input (positive integer [])
+- use multiple threads to print ["Foo"] and then ["bar"] alternatively [n] times
+-- print it all on same line 
+
+- you must have at least [2] threads
+-- one for [foo]
+-- one for [bar]
+"""
+
+import threading
+from time import sleep
+
+# PSEUDOCODE > get the input
+n = int(input("Please enter a positive integer"))
+
+"""
+# PSEUDOCODE > convert n into a range (rangeX)
+# PSEUDOCODE > a function to get all of the even numbers from [rangeX] - print foo for each
+# PSEUDOCODE > a function to get all of the odd numbers from [rangeX] - print bar for each
+# PSEUDOCODE > a function to print foo for every even number, and bar for every odd
+"""
+
+####        NO NO NO - going down the wrong path, far simpler
+
+# PSEUDOCODE > function that writes foo [n] times
+# PSEUDOCODE > function that writes bar [n] times
+
+def foo(n):
+    num = 0
+    while num <= n:
+        print("foo")
+        sleep(1)
+        num += 1
+
+def bar(n):
+    num = 0
+    while num <= n:
+        print("bar")
+        sleep(1)
+        num += 1        
+
+threadFoo = threading.Thread(target=foo, args=(n))
+threadBar = threading.Thread(target=bar, args=(n))
+
+threadFoo.start()
+threadBar.start()
