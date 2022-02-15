@@ -132,3 +132,16 @@ Thread t2: 7
 Thread t2: 8
 Thread t2: 9
 """
+print()
+# video notes: 
+
+import threading            # try not to name your python files with same name as common python modules
+
+def run(content):
+    print("run")
+
+thread1 = threading.Thread(target=run, args=("run 1",))
+thread2 = threading.Thread(target=run, args=("run 2",))
+thread1.start()
+thread2.start()
+print(type(thread1))
