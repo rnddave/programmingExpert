@@ -495,3 +495,52 @@ starting t6
 t5
 t6
 """
+print(f"\n\n >> number of active threads >> {threading.active_count()} \n\n")
+print("sleeping for 5 seconds to let any other code finish")
+sleep(5)
+print()
+# revist earlier example
+
+from threading import Thread, Lock
+from time import sleep
+
+def print_values(values, start_lock, end_lock): 
+    for item in values:
+        start_lock.acquire()
+        print(item)
+        end_lock.release()
+
+lock1 = Lock()
+lock2 = Lock()
+lock2.acquire()
+
+thread1 = Thread(target=print_values, args=([1, 3, 5], lock1, lock2))
+thread2 = Thread(target=print_values, args=([2, 4], lock2, lock1))
+
+thread1.start()
+thread2.start()
+
+print(f"\n\n >> number of active threads >> {threading.active_count()} \n\n")
+
+"""
+OUTPUT: 
+
+
+ >> number of active threads >> 3 
+
+
+sleeping for 5 seconds to let any other code finish
+t5
+t6
+
+1
+2
+3
+
+
+ >> number of active threads >> 3 
+
+
+4
+5
+"""
