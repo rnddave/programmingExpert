@@ -544,3 +544,62 @@ t6
 4
 5
 """
+
+# [.join()]
+
+def start_game(preq=[]):
+    print("waiting to start game.")
+
+    for t in preq:
+        t.join()
+
+    print("started game")
+
+
+def load_assets(): 
+    sleep(2)
+    print("loaded assets")
+
+
+def load_player():
+    sleep(1)
+    print("loaded player")
+
+load_assets_thread = Thread(target=load_assets)
+load_player_threat = Thread(target=load_player)
+preq = [load_player_threat, load_assets_thread]
+
+start_game_thread = Thread(target=start_game, args=(preq,))
+
+"""
+start_game_thread.start()
+load_assets_thread.start()
+load_player_threat.start()
+
+OUTPUT >>>> 
+
+waiting to start game.
+Exception in thread Thread-31:
+Traceback (most recent call last):
+  File "/usr/local/Cellar/python@3.9/3.9.4/Frameworks/Python.framework/Versions/3.9/lib/python3.9/threading.py", line 954, in _bootstrap_inner
+    self.run()
+  File "/usr/local/Cellar/python@3.9/3.9.4/Frameworks/Python.framework/Versions/3.9/lib/python3.9/threading.py", line 892, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/dickinsd/Github/programmingExpert/Section 4 - Advanced Programming/413/413-threads.py", line 554, in start_game
+    t.join()
+  File "/usr/local/Cellar/python@3.9/3.9.4/Frameworks/Python.framework/Versions/3.9/lib/python3.9/threading.py", line 1028, in join
+    raise RuntimeError("cannot join thread before it is started")
+RuntimeError: cannot join thread before it is started
+loaded player
+loaded assets
+"""
+
+# the order does matter.... 
+
+# moved this line >>        start_game_thread.start()
+load_assets_thread.start()
+load_player_threat.start()
+# moved the line commented above to below tthis comment, allowing other threads to load in correct order
+start_game_thread.start()
+
+
