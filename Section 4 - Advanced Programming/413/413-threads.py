@@ -27,6 +27,7 @@ THREADS
 
 """
 
+from ast import arg
 import random
 import time
 from threading import Thread, Lock
@@ -602,4 +603,73 @@ load_player_threat.start()
 # moved the line commented above to below tthis comment, allowing other threads to load in correct order
 start_game_thread.start()
 
+"""
+waiting to start game.
+loaded player
+loaded assets
+started game
+"""
+# what about DEADLOCKs
+print("example of a deadlock")
+def wait_on_thread(threads):
+    sleep(1)
+    for thread in threads:
+        thread.join()
 
+        print("done done done")
+
+threads = []
+
+t1 = Thread(target=wait_on_thread, args=(threads, ))
+t2 = Thread(target=wait_on_thread, args=([t1], ))
+
+threads.append(t2)
+
+print("start t1")
+t1.start()
+print("start t2")
+t2.start()
+
+"""
+OUTPUT: 
+
+example of a deadlock
+start t1
+start t2
+
+"""
+
+# needed to use CTRL + C to break the program as stuck in deadlock 
+# deadlock is a tricky problem, no errors, can be hard to find the cause
+
+print()
+
+print("need to bring the threads under control")
+def wait_on_thread2():
+    sleep(1)
+    print("example of something happening")
+
+
+t1 = Thread(target=wait_on_thread2)
+t2 = Thread(target=wait_on_thread2)
+
+print("start t2.1")
+t1.start()
+print("start t2.2")
+t2.start()
+
+"""
+OUTPUT
+
+need to bring the threads under control
+start t2.1
+start t2.2
+example of something happening
+example of something happening
+"""
+# but to avoid threads running (continue to run) and interfering with other threads
+# more of an issue when you import code into your program
+# then you need to use the [.join()] method to bring the threads back into the main flow
+
+t1.join()
+t2.join()
