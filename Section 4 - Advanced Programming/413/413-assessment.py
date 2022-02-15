@@ -188,18 +188,10 @@ POWERS OF TWO - MULTI-THREADED
 
 """
 
-# starting code: 
-
 import threading
 
 RANGE_START = 0
 RANGE_END = 1000
-
-"""
-At the end of the program, this variable needs to contain all of the powers
-of 2 within the interval [RANGE_START, RANGE_END).
-"""
-powers_of_two = set()
 
 
 def is_power_of_two(x):
@@ -208,8 +200,29 @@ def is_power_of_two(x):
     return (x & (x - 1)) == 0
 
 
+powers_of_two = set()
+set_lock = threading.Lock()
+
+
 def find_powers_of_two(iter):
-    # Write your code here.
-    pass
+    for x in iter:
+        if is_power_of_two(x):
+            set_lock.acquire()
+            powers_of_two.add(x)
+            set_lock.release()
 
 
+thread1 = threading.Thread(target=find_powers_of_two, args=(range(RANGE_START, 250),))
+thread2 = threading.Thread(target=find_powers_of_two, args=(range(250, 500),))
+thread3 = threading.Thread(target=find_powers_of_two, args=(range(500, 750),))
+thread4 = threading.Thread(target=find_powers_of_two, args=(range(750, RANGE_END),))
+
+thread1.start()
+thread2.start()
+thread3.start()
+thread4.start()
+
+thread1.join()
+thread2.join()
+thread3.join()
+thread4.join()
