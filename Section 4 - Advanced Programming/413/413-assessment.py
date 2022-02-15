@@ -249,7 +249,7 @@ import threading
 from time import sleep
 
 # PSEUDOCODE > get the input
-n = int(input("Please enter a positive integer"))
+n = int(input("Please enter a positive integer: "))
 
 """
 # PSEUDOCODE > convert n into a range (rangeX)
@@ -264,15 +264,13 @@ n = int(input("Please enter a positive integer"))
 # PSEUDOCODE > function that writes bar [n] times
 
 def foo(n):
-    num = 0
-    while num <= n:
+    for _ in range(n):
         print("foo")
         sleep(1)
         num += 1
 
 def bar(n):
-    num = 0
-    while num <= n:
+    for _ in range(n):
         print("bar")
         sleep(1)
         num += 1        
