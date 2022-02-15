@@ -31,3 +31,12 @@ thread3 = threading.Thread(target=t3)
 thread1.start()
 thread2.start()
 thread3.start()
+
+"""
+my guess = 
+2
+1
+3
+
+= CORRECT!! 
+"""
