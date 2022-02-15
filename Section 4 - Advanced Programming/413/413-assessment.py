@@ -40,3 +40,33 @@ my guess =
 
 = CORRECT!! 
 """
+
+###################################
+# 413.02 - Starting Threads
+###################################
+
+"""
+start, stop, join the existing functions as threads
+
+such that
+[ lst = [1, 4, 3, 5, 3] ]
+
+starting code: 
+
+import threading
+from time import sleep
+import math
+
+
+def append_values(lst, values=[], delay=1):
+    for value in values:
+        lst.append(value)
+        sleep(math.ceil(abs(delay)))
+
+
+def append_integer(lst, integer):
+    lst.append(integer)
+
+
+lst = []
+"""
