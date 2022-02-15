@@ -248,9 +248,6 @@ FOO BAR - MULTI-THREADED
 import threading
 from time import sleep
 
-# PSEUDOCODE > get the input
-n = int(input("Please enter a positive integer: "))
-
 """
 # PSEUDOCODE > convert n into a range (rangeX)
 # PSEUDOCODE > a function to get all of the even numbers from [rangeX] - print foo for each
@@ -263,20 +260,142 @@ n = int(input("Please enter a positive integer: "))
 # PSEUDOCODE > function that writes foo [n] times
 # PSEUDOCODE > function that writes bar [n] times
 
+"""
 def foo(n):
-    for _ in range(n):
+    for _ in range(n, ):
         print("foo")
         sleep(1)
-        num += 1
 
 def bar(n):
-    for _ in range(n):
+    for _ in range(n, ):
         print("bar")
         sleep(1)
-        num += 1        
 
-threadFoo = threading.Thread(target=foo, args=(n))
-threadBar = threading.Thread(target=bar, args=(n))
+# PSEUDOCODE > get the input
+n = int(input("Please enter a positive integer: "))
+
+threadFoo = threading.Thread(target=foo, args=(n, ))
+threadBar = threading.Thread(target=bar, args=(n, ))
 
 threadFoo.start()
 threadBar.start()
+"""
+
+# output = 
+
+"""
+foo
+bar
+bar
+foo
+
+correct code
+"""
+
+def foo(n):
+    for _ in range(n):
+        print("foo", end="")
+        sleep(1)
+
+def bar(n):
+    for _ in range(n):
+        print("bar", end="")
+        sleep(1)
+
+# PSEUDOCODE > get the input
+n = int(input("Please enter a positive integer: "))
+
+threadFoo = threading.Thread(target=foo, args=(n, ))
+threadBar = threading.Thread(target=bar, args=(n, ))
+
+threadFoo.start()
+threadBar.start()
+
+"""
+OUTPUT = 
+
+Please enter a positive integer: 5
+foobarfoobarfoobarfoobarfoobar
+
+=======
+
+WORKS FINE, but fails in the code playground - unsure why
+"""
+
+###################################
+# 413.04 - Foo Bar multi-threaded - SOLUTION
+###################################
+
+import threading
+
+
+def print_foo(n, foo_lock, bar_lock):
+    for _ in range(n):
+        foo_lock.acquire()
+        print("foo", end="")
+        bar_lock.release()
+
+
+def print_bar(n, foo_lock, bar_lock):
+    for _ in range(n):
+        bar_lock.acquire()
+        print("bar", end="")
+        foo_lock.release()
+
+
+n = int(input("Enter a positive integer: "))
+
+foo_lock = threading.Lock()
+bar_lock = threading.Lock()
+bar_lock.acquire()
+
+foo_thread = threading.Thread(target=print_foo, args=(n, foo_lock, bar_lock))
+bar_thread = threading.Thread(target=print_bar, args=(n, foo_lock, bar_lock))
+
+foo_thread.start()
+bar_thread.start()
+
+foo_thread.join()
+bar_thread.join()
+
+"""
+I can see why this breaks, only if there is more code that follows, 
+now when I use the solution as well, both pieces of code try to run at same time
+I see why the lock is required (only now)
+"""
+
+# final code submitted: 
+
+def foo(n, foo_lock, bar_lock):
+    for _ in range(n):
+        foo_lock.acquire()
+        print("foo", end="")
+        bar_lock.release()
+
+def bar(n, foo_lock, bar_lock):
+    for _ in range(n):
+        bar_lock.acquire()
+        print("bar", end="")
+        foo_lock.release()
+
+# PSEUDOCODE > get the input
+n = int(input("Enter a positive integer: "))
+
+foo_lock = threading.Lock()
+bar_lock = threading.Lock()
+bar_lock.acquire()
+
+threadFoo = threading.Thread(target=foo, args=(n, foo_lock, bar_lock ))
+threadBar = threading.Thread(target=bar, args=(n, foo_lock, bar_lock))
+
+threadFoo.start()
+threadBar.start()
+
+threadFoo.join()
+threadBar.join()
+
+"""
+WORKING, although, annoyingly, needed this exact phrase in the input...
+
+input("Enter a positive integer: ")
+"""
