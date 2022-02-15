@@ -207,22 +207,22 @@ set_lock = threading.Lock()
 def find_powers_of_two(iter):
     for x in iter:
         if is_power_of_two(x):
-            set_lock.acquire()
-            powers_of_two.add(x)
-            set_lock.release()
+            set_lock.acquire()                                                              # lock, ensure only one thread modify at a time
+            powers_of_two.add(x)                                                            # add the new items to the [powers-of-two] thread
+            set_lock.release()                                                              # release lock, allow next thread
 
 
-thread1 = threading.Thread(target=find_powers_of_two, args=(range(RANGE_START, 250),))
+thread1 = threading.Thread(target=find_powers_of_two, args=(range(RANGE_START, 250),))      # split the range up by quarters
 thread2 = threading.Thread(target=find_powers_of_two, args=(range(250, 500),))
 thread3 = threading.Thread(target=find_powers_of_two, args=(range(500, 750),))
 thread4 = threading.Thread(target=find_powers_of_two, args=(range(750, RANGE_END),))
 
-thread1.start()
+thread1.start()                                                                             # start them in order
 thread2.start()
 thread3.start()
 thread4.start()
 
-thread1.join()
+thread1.join()                                                                              # join the threads at end of work
 thread2.join()
 thread3.join()
 thread4.join()
