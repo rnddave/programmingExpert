@@ -142,6 +142,38 @@ def run(content):
 
 thread1 = threading.Thread(target=run, args=("run 1",))
 thread2 = threading.Thread(target=run, args=("run 2",))
+
 thread1.start()
 thread2.start()
-print(type(thread1))
+
+print(type(thread1))        # <class 'threading.Thread'>
+
+"""
+OUTPUT
+
+run 1
+run 2
+"""
+
+# now we're going to add some delay to try and show threading
+print()
+
+from time import sleep
+
+def run(content, delay=1):
+    sleep(delay)
+    print(content)
+
+
+thread1 = threading.Thread(target=run, args=("run 1", 2))
+thread2 = threading.Thread(target=run, args=("run 2", 1))
+
+thread1.start()
+thread2.start()
+
+"""
+OUTPUT
+
+run 2
+run 1
+"""
