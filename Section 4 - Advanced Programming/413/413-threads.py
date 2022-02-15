@@ -177,3 +177,65 @@ OUTPUT
 run 2
 run 1
 """
+
+# now we will try waiting (using [ .join() ])
+
+print()
+
+from time import sleep
+
+def run(content, delay=1):
+    sleep(delay)
+    print(content)
+
+
+thread1 = threading.Thread(target=run, args=("run 1", 2))
+thread2 = threading.Thread(target=run, args=("run 2", 1))
+
+thread1.start()
+print("here's the join ...")
+thread1.join()
+thread2.start()
+
+"""
+OUTPUT
+
+here's the join ...
+run 2
+run 1
+run 1
+run 2
+"""
+
+print("\n\nnow we're going to use thread join on thread 2 as well\n")
+
+def run(content, delay=1):
+    sleep(delay)
+    print(content)
+
+
+thread1 = threading.Thread(target=run, args=("thread 1 with a 2 second delay", 2))
+thread2 = threading.Thread(target=run, args=("thread 2 with a 1 second delay", 1))
+
+thread1.start()
+thread2.start()
+print("here's the join ...")
+thread1.join()
+
+print("another join")
+thread2.join()
+
+print("all done")
+
+"""
+OUTPUT
+
+now we're going to use thread join on thread 2 as well
+
+here's the join ...
+thread 2 with a 1 second delay
+run 2                                       #### this is a left over from earlier piece of code!!! 
+thread 1 with a 2 second delay
+another join
+all done
+"""
