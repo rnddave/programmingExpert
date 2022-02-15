@@ -239,3 +239,215 @@ thread 1 with a 2 second delay
 another join
 all done
 """
+
+# check number of active threads: 
+print("\n\n >> number of active threads >> \n\n")
+print(threading.active_count())                 # 1
+
+# new examples
+print("new example; 1,2,3,4,5 (print) \n\n")
+
+##################################
+
+import threading
+from time import sleep
+
+def print_values(values, delay): 
+    for item in values :
+        print(item)
+        sleep(delay)
+
+thread1 = threading.Thread(target=print_values, args=([1, 3, 5], 0.2))
+thread2 = threading.Thread(target=print_values, args=([2, 4], 0.2))
+
+thread1.start()
+thread2.start()
+
+"""
+1
+2
+4
+3
+5
+"""
+# output is random, but we can modify this by changing delay: 
+print()
+
+thread3 = threading.Thread(target=print_values, args=([1, 3, 5], 0.2))
+thread4 = threading.Thread(target=print_values, args=([2, 4], 0.3))
+
+thread3.start()
+thread4.start()
+
+"""
+OUTPUT messed up, delays crossing from earlier code: 
+
+1       
+2
+
+1
+2
+4
+3
+3
+4
+5
+5
+
+I will modify above code to make it easier to read where things are in the output
+
+"""
+
+thread1 = threading.Thread(target=print_values, args=([1.1, 1.3, 1.5], 0.2))
+thread2 = threading.Thread(target=print_values, args=([2.2, 2.4], 0.2))
+
+thread1.start()
+thread2.start()
+
+print()
+
+thread3 = threading.Thread(target=print_values, args=([3.1, 3.3, 3.5], 0.2))
+thread4 = threading.Thread(target=print_values, args=([4.2, 4.4], 0.3))
+
+thread3.start()
+thread4.start()
+
+"""
+OUTPUT still messed up with earlier code interjecting: 
+
+1
+2
+
+1
+2
+1.1
+2.2
+
+3.1
+4.2
+3
+3
+2.4
+1.3
+3.3
+4
+4.4
+4
+5
+5
+3.5
+1.5
+
+might need to implement mutex example, just to better see this output... 
+"""
+
+from threading import Thread, Lock
+
+mutex = Lock()
+
+mutex.acquire()
+thread5 = threading.Thread(target=print_values, args=([5.1, 5.3, 5.5], 0.4))
+thread6 = threading.Thread(target=print_values, args=([6.2, 6.4], 0.4))
+
+thread5.start()
+thread6.start()
+
+print()
+
+thread7 = threading.Thread(target=print_values, args=([7.1, 7.3, 7.5], 0.6))
+thread8 = threading.Thread(target=print_values, args=([8.2, 8.4], 0.7))
+
+thread7.start()
+thread8.start()
+mutex.release()
+
+"""
+OUTPUT = that didn't work...
+
+1
+2
+
+1
+2
+1.1
+2.2
+
+3.1
+4.2
+5.1
+6.2
+
+7.1
+8.2
+4
+3
+3
+1.3
+2.4
+3.3
+6.4
+7.3
+5.3
+4
+8.4
+4.4
+5
+5
+1.5
+3.5
+7.5
+5.5
+
+
+instead I'll change the delays: 
+
+thread5 = threading.Thread(target=print_values, args=([5.1, 5.3, 5.5], 0.4))
+thread6 = threading.Thread(target=print_values, args=([6.2, 6.4], 0.4))
+
+thread5.start()
+thread6.start()
+
+print()
+
+thread7 = threading.Thread(target=print_values, args=([7.1, 7.3, 7.5], 0.6))
+thread8 = threading.Thread(target=print_values, args=([8.2, 8.4], 0.7))
+"""
+# new output: 
+"""
+new example; 1,2,3,4,5 (print) 
+
+
+1
+2
+
+1
+2
+1.1
+2.2
+
+3.1
+4.2
+5.1
+6.2
+
+7.1
+8.2
+1.3
+3
+4
+3
+2.4
+3.3
+4
+4.4
+3.5
+5.3
+6.4
+1.5
+5
+5
+7.3
+8.4
+5.5
+7.5
+"""
