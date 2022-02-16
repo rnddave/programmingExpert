@@ -102,7 +102,7 @@ OUPUT
 main
 main again                      # as you can see, it did not wait for the 'print_something' to complete before moving to next code block
 """
-
+print()
 # await task
 
 async def print_something():
@@ -118,4 +118,42 @@ async def main():
     await task
     print("awaited")
 
-asyncio.run(main())             # this is how you run async code
+asyncio.run(main()) 
+
+"""
+OUTPUT 
+
+main
+main again
+something
+awaited
+"""
+
+# let's pass a result this time 
+print()
+
+async def print_something():
+    await asyncio.sleep(1)
+    print("something")
+    return "finished"                               # note this is the return
+
+async def main():               
+    print("main")
+    
+    task = asyncio.create_task(print_something())     
+    
+    print("main again")
+    result = await task                             # wait for the return?
+    print(result)                                   # print the return
+
+asyncio.run(main()) 
+
+"""
+OUTPUT
+
+"""
+
+
+
+
+
