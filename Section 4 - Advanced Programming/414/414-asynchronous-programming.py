@@ -48,8 +48,74 @@ achievements.exe was downloaded successfully
 Finished downloading 5 files in 1.0020651817321777 seconds!
 """
 
+# moving on
+
+"""
+but what's synchronous programming? 
+- sequential
+- limited by speed of the processor (per core)
+
+"""
+# lets code
+
+import asyncio                  # alternative to threading, easier to use and understand 
+                                # advanced event scheduler, avoid spawning multiple threads 
+
+async def print_something():
+    await asyncio.sleep(1)
+    print("something")
+
+async def main():               # note this is a new keyword!!
+    print("main")
+    await print_something()     # this is 'blocking code' have to wait for it to finish
+    print("main again")
+
+asyncio.run(main())             # this is how you run async code
+# print(type(main()))           # <class 'coroutine'>
+
+"""
+output
+
+main
+something
+main again
+"""
+# let's talk about tasks (scheduling)
 
 
+async def print_something():
+    await asyncio.sleep(1)
+    print("something")
 
+async def main():               
+    print("main")
+    
+    task = asyncio.create_task(print_something())     
+                                # this will start the task before it waits
+    print("main again")
 
+asyncio.run(main())             # this is how you run async code
 
+"""
+OUPUT
+
+main
+main again                      # as you can see, it did not wait for the 'print_something' to complete before moving to next code block
+"""
+
+# await task
+
+async def print_something():
+    await asyncio.sleep(1)
+    print("something")
+
+async def main():               
+    print("main")
+    
+    task = asyncio.create_task(print_something())     
+    
+    print("main again")
+    await task
+    print("awaited")
+
+asyncio.run(main())             # this is how you run async code
