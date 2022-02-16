@@ -6,6 +6,7 @@ ASYNCHRONOUS PROGRAMMING
 """
 
 import asyncio
+from re import I
 import time
 
 
@@ -358,4 +359,43 @@ fetching complete
 [6.1, 6.2, 6.3, 6.4, 6.5, 6.6]
 """
 
+"""
+MORE NOTES >>> 
 
+create a task =  futures 
+
+essentially - in the future this will run and return value etc 
+
+"""
+
+# async generator 
+print()
+
+import asyncio
+
+async def gen(n):
+    for i in range(n):
+        yield i
+        await asyncio.sleep(0.5)
+
+async def main():
+    async for i in gen(10):
+        print(f"7.{i}")
+
+asyncio.run(main())
+
+"""
+>>> OUTPUT 
+
+
+7.0
+7.1
+7.2
+7.3
+7.4
+7.5
+7.6
+7.7
+7.8
+7.9
+"""
