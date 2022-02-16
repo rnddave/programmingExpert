@@ -223,8 +223,7 @@ async def print_values(values, delay):
         return delay
 
 async def main():
-    values = await asyncio.gather(print_values([3.1, 3.3, 3.5], 0.2), 
-                                    print_values([3.2, 3.4], 0.3))
+    values = await asyncio.gather(print_values([3.1, 3.3, 3.5], 0.2), print_values([3.2, 3.4], 0.3))
 
     print(values)
    
@@ -239,4 +238,48 @@ OUTPUT
 
 this is not as expected (expected all values to print)
 """
+
+# new example
+print()
+
+async def fetch_data():
+    print("start fetchhing")
+    await asyncio.sleep(2)
+    print("fetching complete")
+    return [4.1, 4.2, 4.3, 4.4, 4.5, 4.6]
+
+async def run_algerithm():
+    for i in range(10):
+        print(i)
+        await asyncio.sleep(0.5)
+
+
+async def main():
+    data = await asyncio.gather(fetch_data(), run_algerithm()
+    )
+
+asyncio.run(main())
+
+"""
+>>> OUTPUT
+
+start fetchhing
+0
+1
+2
+3
+fetching complete
+4
+5
+6
+7
+8
+9
+"""
+
+
+
+
+
+
 
