@@ -190,7 +190,7 @@ print()
 async def print_values(values, delay):
     for item in values:
         print(item)
-        await  asyncio.sleep(delay)
+        await  asyncio.sleep(delay)                 # this works, because as soon as we 'sleep' we pass control back to other task
 
 
 async def main():
@@ -212,7 +212,31 @@ OUTPUT
 2.5
 """
 
+# gathering tasks
+print()
 
+async def print_values(values, delay):
+    for item in values:
+        print(item)
+        await  asyncio.sleep(delay)                 # this works, because as soon as we 'sleep' we pass control back to other task
 
+        return delay
 
+async def main():
+    values = await asyncio.gather(print_values([3.1, 3.3, 3.5], 0.2), 
+                                    print_values([3.2, 3.4], 0.3))
+
+    print(values)
+   
+asyncio.run(main())
+
+"""
+OUTPUT
+
+3.1
+3.2
+[0.2, 0.3]
+
+this is not as expected (expected all values to print)
+"""
 
