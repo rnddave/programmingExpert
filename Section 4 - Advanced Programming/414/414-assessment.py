@@ -45,4 +45,25 @@ asyncio.run(main())
 This is what I expected
 
 BUT DOES NOT WORK IN CODE PLAYGROUND!!!
+
+ACTUAL SOLUTION = >>>
+
+async def add_one(coroutine):
+    return_value = await coroutine()
+    return return_value + 1
+
+-=-=-=-=-=-=-=-=-=--=-=-=-=-=-==-==-==-==-
+
+I basically do not understand the question, which does not look well for me
 """
+
+###################################
+# 414.05 - Asynchronous Concurrency
+###################################
+"""
+- schedule existing unction to run multiple times
+- such that [lst = [1, 3, 2, 4, 6, 5]] at end of program
+- all functions to be run using [asyncio]
+- code should not  take longer than [1] second to run
+"""
+
