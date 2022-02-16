@@ -23,3 +23,57 @@ HOWEVER - error handling >>>
 --- then call the decorated function with only integer arguments
 """
 
+def flatten_lists(func):
+    def wrapper(*args):
+        new_args = []                           # new empty list
+
+        for arg in args:                        # for each argument passed
+            if isinstance(arg, list):           # is the argument peing passed a list?
+                new_args.extend(arg)            # if the arg is a list, then add each item of old list to new list
+            else:
+                new_args.append(arg)            # if argument is just a single integer, then just add that single item to list
+
+        result = func(*new_args)                # return some *new_args
+        return result                           # pass it to the wrapper
+
+    return wrapper                              # pass it to the function
+
+def convert_strings_to_ints(func):
+    def wrapper(*args):
+        new_args = []                           # new empty list
+
+        for arg in args.split():                # split components of a string
+            try:
+                new_args.append(arg)            # add the item to the end of the new_list item
+            except ValueError:
+                pass
+
+        result = func(*new_args)                
+        return result                           # return the result
+    
+    return wrapper
+
+
+def filter_integers(func):
+    def wrapper(*args):
+        new_args = []                           # new empty list
+
+        for arg in args:                        # for each argument passed
+            if isinstance(arg, int):            # is the argument peing passed a int?
+                new_args.append(arg)            # if the arg is a int, then add item to new list
+ 
+        result = func(*new_args)                # return some *new_args
+        return result                           # pass it to the wrapper
+
+    return wrapper                              # pass it to the function
+
+@flatten_lists
+@convert_strings_to_ints
+@filter_integers
+def integer_sum(*args):
+    return sum(args)
+
+"""
+try it - FAILED EVERY TEST
+
+"""
