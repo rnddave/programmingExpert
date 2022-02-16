@@ -317,6 +317,45 @@ fetching complete
 9
 """
 
+# fetching data as well
+print()
 
+async def fetch_data():
+    print("start fetchhing")
+    await asyncio.sleep(2)
+    print("fetching complete")
+    return [6.1, 6.2, 6.3, 6.4, 6.5, 6.6]
+
+async def run_algerithm():
+    for i in range(10):
+        print(i)
+        await asyncio.sleep(0.5)
+
+
+async def main():
+    data = asyncio.create_task(fetch_data())
+    await run_algerithm()
+    print(await data)
+    
+
+asyncio.run(main())
+
+"""
+>>> OUTPUT
+
+0
+start fetchhing
+1
+2
+3
+fetching complete
+4
+5
+6
+7
+8
+9
+[6.1, 6.2, 6.3, 6.4, 6.5, 6.6]
+"""
 
 
