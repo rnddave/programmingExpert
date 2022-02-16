@@ -277,8 +277,45 @@ fetching complete
 9
 """
 
+# but what if we want one to complete before the other?
+print()
+
+async def fetch_data():
+    print("start fetchhing")
+    await asyncio.sleep(2)
+    print("fetching complete")
+    return [5.1, 5.2, 5.3, 5.4, 5.5, 5.6]
+
+async def run_algerithm():
+    for i in range(10):
+        print(i)
+        await asyncio.sleep(0.5)
 
 
+async def main():
+    data = await fetch_data() 
+    await run_algerithm()
+    
+
+asyncio.run(main())
+
+"""
+
+>>> OUTPUT
+
+start fetchhing
+fetching complete
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+"""
 
 
 
