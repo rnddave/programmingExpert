@@ -17,7 +17,34 @@ write a generator
 
 you may assume that frequency will allywas be >= 0
 
+
+STARTING CODE >>> 
+
+def generate_string(string, frequency):
+    # Write your code here.
+    pass
+
+
+class GenerateString:
+    def __init__(self, string, frequency):
+        # Write your code here.
+        pass
+
+    # Write your code here.
+
 """
 
 # WTF - I DON"T even UNDERSTAND the question!!!!!!!!
+
+
+
+def generate_string(string, frequency):
+
+    pass
+
+
+class GenerateString:
+    def __init__(self, string, frequency):
+
+        pass
 
