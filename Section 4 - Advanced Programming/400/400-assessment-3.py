@@ -47,6 +47,19 @@ def generate_string(string, frequency):
             yield char_in_string
 
 
+"""
+for i in generate_string("blue", 5):
+    print(i, end="")
+
+
+>>> output
+
+bbbbbllllluuuuueeeee
+
+THIS bit SEEMS to be working fine
+
+"""
+
 
 
 class GenerateString:
@@ -54,11 +67,13 @@ class GenerateString:
         self.string = string
         self.frequency = frequency
 
-        pass
-
-
     def __iter__(self):
-        pass
+        self.char_in_string = 0
+
+        return self
 
     def __next__(self):
+        self.char_in_string += 1
+
+
         pass
