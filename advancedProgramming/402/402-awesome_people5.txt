@@ -1,0 +1,7 @@
+line number 1
+number 2
+another line is here at number 3
+this will be number 4
+I am still typing, and this is number 5
+I think this one is 6
+and yes, that was 6, so this is 7
