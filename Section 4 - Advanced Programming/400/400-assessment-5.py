@@ -17,3 +17,22 @@ constructor:
 -- which takes in a list [record_ids]
 -- and should return the list of records corresponding to those in [record_ids]
 """
+
+import asyncio
+
+
+class BatchFetcher:
+    def __init__(self, database):
+        self.database = database
+
+    async def fetch_records(self, record_ids):
+        pending_records = []
+        for record_id in record_ids:
+            pending_records.append(self.database.async_fetch(record_id))
+
+        return await asyncio.gather(*pending_records)
+
+"""
+working
+"""
+
