@@ -18,29 +18,29 @@ implement following methods:
 -- if this word has not been seen, return 0
 """
 
-import threading
-
+import threading                                # need this for multi-thread
 
 class WordCounter:
     def __init__(self):
         self.lock = threading.Lock()
-        self.word_counts = {}
+        self.word_counts = {}                   # dictionary
 
     def process_text(self, text):
-        words = text.split(" ")
+        words = text.split(" ")                 # per the instructions
         for word in words:
-            self._increment_word_count(word)
+            self._increment_word_count(word)    # do the work
 
     def get_word_count(self, word):
-        self.lock.acquire()
-        count = self.word_counts.get(word, 0)
-        self.lock.release()
-        return count
+        self.lock.acquire()                     # make it thread safe 
+        count = self.word_counts.get(word, 0)   # if no word = count 0
+        self.lock.release()                     # release the lock
+        return count                            # return count of word but if word doesn't exist, then return 0
 
-    def _increment_word_count(self, word):
-        self.lock.acquire()
+    def _increment_word_count(self, word):      # _ at start = treat it like private (python doesn't quite follow the rules here)
+        self.lock.acquire()                     # make it thread safe 
         self.word_counts[word] = self.word_counts.get(word, 0) + 1
-        self.lock.release()
+                                                # if word not exist, make a new key, value 1, else if does exist, then increase the value
+        self.lock.release()                     # release the lock
 
 
 ###################################
