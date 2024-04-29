@@ -1,0 +1,44 @@
+/*
+A.	Need to read a 10-digit number
+B.	Need to perform a sequence of calculations on the first 9-digitis 
+C.	Get the combined sum of the calculations performed on the first 9 digits
+D.	Divide the sum (C) by 11
+E.	The remainder must equal the last digit (A) 
+    	Does = correct
+    	Does not = incorrect 
+
+*/
+
+listNumbers = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1] ;     // an array of numbers to multiplay
+isbn10 = input('enter the ISBN to be checked: ') ;  // Get a barcode (this will be a string)
+
+// I want to remove the check digit so that I can perform the math against remaining characters
+
+modStart = isbn10[:-1] ;   // this will populate a new variable without the last character
+listISBN = list(modStart) ; // I want another array for the remaining ISBN digits
+
+// I think I know how to do something in python across two lists, so I will try that here
+// I need numpy though
+
+import numpy as np ;
+combinedList = []// another new variable, this time for my list index multiply by list index 
+combinedList = np.multiply(modStart, listISBN) ; // this would then multiply index by index in respective lists (arrays). 
+
+// the only thing I'm worried about at the moment is the 'multiply by 0' which I fear will null that datum point, I believe that going beyond pseudo and into proper code I would need to implement error handling for any 0 (zero)
+
+// we now need to sum all componented in the combinedList
+bringItTogether = sum(combinedList) ;   // we could alternatively do this as part of the if condition I think
+
+// let's revisit the initial ISBN-10 as now we need to use the final digit (check digit)
+checkDigit = isbn10[-1] ;   // I believe this will be the index of the final character without needing to know length, alternatively, as we know it is 10 characters, we can also ask for isbn10[9] index 9.
+
+// finally we want to see if the ISBN meets the modulus 11 check
+
+if (bringItTogether % 11 = checkDigit) {    // if the remainder of X / Y = checkDigit
+    print('This is a valid ISBN-10') ; 
+}
+else {
+    print('There is something wrong with this ISBN')
+}
+
+

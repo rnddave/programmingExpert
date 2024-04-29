@@ -1,0 +1,101 @@
+//variables 
+// ALREADY SET IN PREV EX.
+
+get newObservation() ; // immediately followed by another scan to see what is changing (if anything)
+// above will return a new observation in format [[x,y], [x,y], [x,y], [x,y]]
+
+deltaObservation = (initialObservation + newObservation) ; // what changed
+
+canWeMove = whatChanged(initialObservation, deltaObservation) ; // expect True/False response
+// do I need an If for this? 
+WHILE (canWeMove == True) ; 
+    joinMotorway() ; 
+
+FUNCTION joinMotorway() ; 
+    initialObservation() ;
+    newObservation() ; // check, check, check again
+    deltaObservation = (initialObservation + newObservation) ; // what changed
+    canWeMove(initialObservation, deltaObservation) ; 
+
+    // the focus should be twofold; safe to joim (a space/gap) and getting up to speed
+    whatChanged(initialObservation, deltaObservation) ; 
+    canWeGo = isThereAGap()
+    IF (canWeGo == True) ; 
+        vehicleMoveForward() ;
+    ELSE ;
+        stopVehicle() ; // beyond scope
+ 
+
+FUNCTION isThereAGap() ; 
+    ourSpeed = getCurrentSpeed() ; // beyond scope, what is our current speed
+    speedOfClosestObjects = howFast() ; // this function will call another function that I want to build out a list of objects and their speeds
+    IF (ourSpeed < speedOfClosestObjects) ;
+        WHILE (ourSpeed < speedOfClosestObjects) ;
+            accelerator ++ 0.1 ;
+        ENDWHILE ;
+        return True ;
+    ELSE IF (ourSpeed == speedOfClosestObjects) ;
+        return True ;
+    ELSE ; 
+        WHILE (ourSpeed < speedOfClosestObjects) ;
+            accelerator -- 0.1 ; 
+        ENDWHILE ;
+        return True
+    ENDIF
+    return False // can I do this, can I have a false as final code, I assume we only reach this if the other return statements not met
+
+
+
+FUNCTION howFast() ; 
+    // we need to know the speeds of the objcts to the right of our vehicle 
+    otherVehicles = {} ; // create and empty dictionary 
+    getNewObservation() ;
+    FOR (each object) ;
+        getNewObservation() ;
+        whatChanged() ;
+        speedOfObject = (whatChanged - getNewObservation) ; // okay, I know this won't work, but I am trying to record:
+                                                            // {obj:speed, obj:speed}
+                                                            // so I want to know how quickly and object moves between observations
+    
+        otherVehicles['obj'] = speedOfObject // though I haven't figured out how to capture speed, I would want to eventually write it to a dictionary
+        // I realise I also need to create a unique number or reference for each vehicle observed, else cannot update that objects speed
+
+    return otherVehicles ; 
+
+
+
+FUNCTION whatChanged(initialObservation, deltaObservation) ; // I'm probably over thinking this... 
+    //need to compare each list element from the delta against the initial 
+    frontRight = [initialObservation[0[0]], deltaObservation[0[0]]] ; // is that right? 
+    backRight = [initialObservation[0[1]], deltaObservation[0[1]]] ;
+    backLeft = [initialObservation[0[2]], deltaObservation[0[2]]] ;
+    frontLeft = [initialObservation[0[3]], deltaObservation[0[3]]] ;
+
+    IF (frontRight > [[0.0, 0.0], [0.0, 0.0]]) ; 
+        get newObservation() ; 
+        frontRightCheck = [deltaObservation[0[0]], newObservation[0[0]]] ; // anything else changed, if so what? 
+        If (frontRightCheck < frontRight) ; // something is moving towards us (we are 0,0, closer to 0 = closer to us)
+            THEN // 'The object is moving towards us, hold position, await further observations' ;
+            return False ; 
+        ELSE IF (frontRightCheck = frontRight) ; // no change
+            THEN // 'The object is no longer moving, hold position, await further observations' ;
+            return False ;
+        ELSE // only remaining option is that the frontRightCheck > frontRight then object moving away
+            THEN //  'The object is moving away from us, no longer an object of concern, proceed to next action'
+            return True ;
+        END IF
+    ELSE IF // we repeat the above but for checking the FRONT LEFT
+    ELSE IF // we repeat the above but for checking the BACK LEFT
+    ELSE IF // we repeat the above but for checking the BACK RIGHT
+
+    // on reflection, I suspect I did not need to do each check in an IF statement, furthermore, 
+    // this would likely need to be some kind of parallel processing, or at least all corners checked at the same time? 
+
+FUNCTION signalActivate(direction) ; // some method of activating the indicators as required
+    IF (direction = 'Right') ; 
+        signalRight = True ; // set the global variable
+    ELSE IF (direction = 'Left') ; 
+        signalLeft = True ; // global variable
+    ELSE ; // probably dont need this
+        break ; // return to main code
+    END IF

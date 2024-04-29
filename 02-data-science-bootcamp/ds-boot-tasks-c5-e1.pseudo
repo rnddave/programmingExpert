@@ -1,0 +1,73 @@
+/*
+new actions 
+
+•	We need to establish some initial stock levels, variables will do
+•	Take user input, decide if the button is supposed to do anything (error if not)
+
+*/
+
+// build it out, initialise some snacks
+
+// inidividual snacks
+itemOne = 'milk chocolate bar' ;
+itemTwo = 'muesli bar' ;
+itemThree = 'cheese puffs' ;
+itemFour = 'apple' ;
+itemFive = 'popcorn' ; 
+
+// need to initialise the dispensed count, currently I am assuming this happens daily, ASSUMPTION...
+DispensedItemOne = 0 ;
+DispensedItemTwo = 0 ;
+DispensedItemThree = 0 ;
+DispensedItemFour = 0 ;
+DispensedItemFive = 0 ;
+
+// stock levels
+itemOneStock = 5 ;
+itemTwoStock = 5 ;
+itemThreeStock = 5 ;
+itemFourStock = 5 ;
+itemFiveStock = 5 ;
+
+// I can't quite get it in my head where the starting place is, so I am creating a while loop that will be true if the machine is on ??
+while (machineIsOn) {
+
+    // take user choice as an input
+    selection = input('Select an item') ;   // expected input will be a number, the keybad is numeric, no reason to check for errors? 
+
+    // the following code block is full of repetition, but it is referencing unique values, unsure how to build this into a while loop 
+    if (selection <= 5) {       // can I use nested if-statements? 
+        if (selection == 1 AND itemOneStock != 0) {
+            dispense itemOne ;      // this is still quite abstract, what does it mean to dispense an item? 
+            DispensedItemOne ++ 1 ;     // count the number of times this item was dispensed
+            itemOneStock -- 1 ;    // reduce the number of items in stock
+        } 
+        else if (selection == 2 AND itemTwoStock != 0) {
+            dispense itemTwo ;
+            DispensedItemTwo ++ 1 ;
+            itemTwoStock -- 1 ; 
+        }
+        else if (selection == 3 AND itemThreeStock != 0) {
+            dispense itemThree ;
+            DispensedItemThree ++ 1 ;
+            itemThreeStock -- 1 ; 
+        }
+        else if (selection == 4 AND itemFourStock != 0) {
+            dispense itemFour ;
+            DispensedItemFour ++ 1 ;
+            itemFourStock -- 1 ; 
+        }
+        else if (selection == 5 AND itemFiveStock != 0{
+            dispense itemFive ;
+            DispensedItemFive ++ 1 ;
+            itemFiveStock -- 1 ; 
+        }
+    }   
+    else if (selection = 6) {    // lets get a report of dispensed items
+        print('One' + DispensedItemOne + ', Two' + DispensedItemTwo + ', Three' + DispensedItemThree + ', Four' + DispensedItemFour + ', Five' + DispensedItemFive) ;
+    }
+    else {
+        print('Invalid choice') ;
+    }
+} // At this point I imagine the machine/display reverts to starting position, the machine is still on, therefore the loop remains True and the if statements can be followed sequentially
+
