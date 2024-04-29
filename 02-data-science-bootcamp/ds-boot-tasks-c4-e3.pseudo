@@ -1,0 +1,57 @@
+•	Get string (from input) 
+•	Get length of string
+
+// Tackle the smaller strings first
+•	IF string < 3) 
+o	Then check character pair rules
+o	IF (string.X0 = ‘I’ OR ‘X’ OR ‘L’ OR ‘C’ OR ‘M’)
+	string.X1 can be any of I, V, X, L, C, M
+o	ELSE IF (string.X0 = ‘V’)
+	string.X1 can be any of I, X, L, C, M
+o	END IF
+o	ELSE (string.X0 = ‘L’)
+	string.X1 can be any of I, V, X, C, M
+o	END IF
+•	END IF
+
+// Now we need to disqualify any strings that have invalid repeating characters (low hanging fruit)
+•	IF (string.X0 = ‘V’)
+o	String.X1 can be any of I, X, L, C, M 
+o	IF (String.X0 = String.X1)
+	Then = malformed string (cannot have VV)
+o	END IF
+•	IF (string.X0 = ‘L’)
+o	String 1 can be any of I, V, X, C, M
+o	IF (string.X0 = string.X1)
+	Then = malformed string, cannot have LL
+o	END IF 
+•	END IF
+
+// 3 or more characters AND more than 3 of same in a row
+// I don’t know how to do this yet, but I want to compare characters 1,2,3 and then 2,3,4 and then 3,4,5 etc, looking for any 3-character matches.
+
+•	IF (string.X0 and string.X1 match)
+o	Then check if string.X2 matches as well = 3 in a row
+o	IF there are 3 in a row, 
+	Then need to check if string.X3 is a match = malformed string
+	End program with exception
+o	END IF
+•	END IF
+
+// I think this is where we would do a WHILE LOOP
+•	While (string.length > 3 AND < string.length) 	// I think this will allow me to repeat this section, I want to repeat it against every pair of character (AA, AB, BB, BC, CC, CD, DD etc) until I reach the string length (if there was a string of 4 characters, this loop would run 7 times)
+// Rules for character pair processing: 
+•	IF (string.X0 = ‘I’)
+o	string.X1 can be any of I, V, X, L, C, M (why isn’t L being considered?)
+•	ELSE-IF (string.X0 = ‘V’)
+o	string.X1 can only be ‘I’ 
+•	ELSE-IF (string.X0 = ‘X’)
+o	string.X1 can be any of I, V, X, L, C, M
+•	ELSE-IF (string.X0 = ‘L’)
+o	string.X1 can be any of I, V, X, C, M
+•	ELSE-IF (string.X0 = ‘C’)
+o	string.X1 can be any of I, V, X, C, M
+•	ELSE-IF (string.X0 = M)
+o	string.X1 can be any of I, X, C, M
+o	END IF
+•	END WHILE

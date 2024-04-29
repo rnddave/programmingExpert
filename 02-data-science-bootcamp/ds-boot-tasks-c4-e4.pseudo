@@ -1,0 +1,37 @@
+•	Array_A = alphabet
+•	Array_P = pangram
+•	First compare size (range?) of Array_A vs Array_P 
+o	If the proposed pangram is short of the size of the alphabet, then there is no point running through the rest of the computational activities as we already know it is not a pangram
+•	If the proposed pangram meets or exceeds the size of the alphabet that we’re working with, then we need to count occurrences of each letter
+o	Pangram size and alphabet size being equal does not guarantee a pangram as there may be duplicated letters. 
+o	Further, a proposed pangram exceeding the size of the alphabet does not only ensure it is not isogrammatic, but it may also have repeated letters and missing letters. 
+
+
+AlphaArray = [] ;     // initialise an empty array
+PangramArray = [] ;   // initialise an empty array
+
+// load the data points (file or as inputs)
+
+AlphaArray = open('alphabet file') ;
+PangramArray = open('pangram file') ;
+
+// compare the size of the arrays 
+
+if (PangramArray < AlphabetArray) {     // run once, if too small, end of checks
+    print('this pangram is smaller than total alphabet size, therefore this file cannot be a pangram') ; 
+}
+
+if (PangramArray = AlphabetArray) {     // run once, it is statistically unlikely to find a hologramatic pangram, therefore we do not need to dwell on this check
+
+    // in python we could simply compare the strings, the order of the characters would be irrelivent (I believe) as the comparison is made at the ASCII level, the sum of the ASCII of AbcD is the same as ADcb (note that this would be case sensitive)
+    print('You have found a hologramatic pangram in your chosen alphabet') ; 
+}
+
+while (PangramArray > AlphabetArray) {
+    // I think I need a for loop here
+    for (a in AlphabetArray) {
+        PangramArray = PangramArray[:a]
+        PangramArray[a + 1]
+        // I am asking the system to go through each item in the alphabet (a) and count how many times that item appears in the pangram
+    }
+}

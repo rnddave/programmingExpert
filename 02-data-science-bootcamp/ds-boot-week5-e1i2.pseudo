@@ -1,0 +1,73 @@
+//variables 
+// ALREADY SET IN PREV EX.
+
+get newObservation() ; // immediately followed by another scan to see what is changing (if anything)
+// above will return a new observation in format [[x,y], [x,y], [x,y], [x,y]]
+
+deltaObservation = (initialObservation + newObservation) ; // what changed
+
+canWeMove = whatChanged(initialObservation, deltaObservation) ; // expect True/False response
+// do I need an If for this? 
+WHILE (canWeMove == True) ; 
+    theRoundabout(exit)
+
+FUNCTION theRoundabout(exit) ; // function parameter = desired exit
+    exitDesired = exit ; 
+    initialObservation() ;
+    newObservation() ; // check, check, check again
+    deltaObservation = (initialObservation + newObservation) ; // what changed
+    canWeMove(initialObservation, deltaObservation) ; 
+    WHILE (canWeMove == True) ;
+        IF (exitDesired == 1) ;
+            signalActivate('left') ; 
+            vehicleMoveForward(deltaObservation, initialObservation) ;
+        ELSE IF (exitDesired == 2) ; // someone did not consider how to determine number & direction of exits initially...
+            // no signal initially
+            vehicleMoveForward(deltaObservation, initialObservation) ;
+            signalActivate('left') ; 
+        ELSE ; // anything more than 2nd exit, assume right signal required initially
+            signalActivate('right') ; 
+            vehicleMoveForward(deltaObservation, initialObservation) ;
+            signalActivate('left')
+        ENDIF
+    ENDWHILE
+
+
+            
+
+
+FUNCTION whatChanged(initialObservation, deltaObservation) ; // I'm probably over thinking this... 
+    //need to compare each list element from the delta against the initial 
+    frontRight = [initialObservation[0[0]], deltaObservation[0[0]]] ; // is that right? 
+    backRight = [initialObservation[0[1]], deltaObservation[0[1]]] ;
+    backLeft = [initialObservation[0[2]], deltaObservation[0[2]]] ;
+    frontLeft = [initialObservation[0[3]], deltaObservation[0[3]]] ;
+
+    IF (frontRight > [[0.0, 0.0], [0.0, 0.0]]) ; 
+        get newObservation() ; 
+        frontRightCheck = [deltaObservation[0[0]], newObservation[0[0]]] ; // anything else changed, if so what? 
+        If (frontRightCheck < frontRight) ; // something is moving towards us (we are 0,0, closer to 0 = closer to us)
+            THEN // 'The object is moving towards us, hold position, await further observations' ;
+            return False ; 
+        ELSE IF (frontRightCheck = frontRight) ; // no change
+            THEN // 'The object is no longer moving, hold position, await further observations' ;
+            return False ;
+        ELSE // only remaining option is that the frontRightCheck > frontRight then object moving away
+            THEN //  'The object is moving away from us, no longer an object of concern, proceed to next action'
+            return True ;
+        END IF
+    ELSE IF // we repeat the above but for checking the FRONT LEFT
+    ELSE IF // we repeat the above but for checking the BACK LEFT
+    ELSE IF // we repeat the above but for checking the BACK RIGHT
+
+    // on reflection, I suspect I did not need to do each check in an IF statement, furthermore, 
+    // this would likely need to be some kind of parallel processing, or at least all corners checked at the same time? 
+
+FUNCTION signalActivate(direction) ; // some method of activating the indicators as required
+    IF (direction = 'Right') ; 
+        signalRight = True ; // set the global variable
+    ELSE IF (direction = 'Left') ; 
+        signalLeft = True ; // global variable
+    ELSE ; // probably dont need this
+        break ; // return to main code
+    END IF

@@ -1,0 +1,80 @@
+// Pseudo code for the EAC interpreter 
+
+/* version 1
+
+1	Clear the [EAC]  = null;
+2	Firefighter enters a new  EAC  input;
+3	Convert the EAC to a dictionary or key pair EAC  EAC_Dict;
+4	Review EAC_Dict.index1;
+4.1	IF;
+4.2	If EAC_Dict.index1 is 1 = output  statement X1;
+4.3	Else if EAC_Dict.index1 is 2 = output  statement X2;
+4.4	Else if EAC_Dict.index1 is 3 = output   statement X3;
+4.5	Else = output  statement X4;
+4.6	ENDIF;
+5	Review EAC_Dict.index2;
+5.1	IF;
+5.2	If EAC_Dict.index2 is P OR S OR, W OR Y then = output  statement V1;
+5.3	Else = output  statement V2;
+5.4	ENDIF
+6	Review EAC_Dict.index2;
+6.1	IF;
+6.2	If EAC_Dict.index2 is P OR R OR W OR X then = output  statement C1;
+6.3	Else = output  statement C2;
+6.4	ENDIF
+7	Review EAC_Dict.index3;
+7.1	IF;
+7.2	If EAC_Dict.index3 is E = output  statement E1;
+7.3	Else = output  statement E2;
+7.4	ENDIF;
+*/
+
+// v2
+
+// clear down the register 
+
+eac = ''                // empty string
+MachineIsOn = False     // until I get told otherwise, I am going to try and use this as a way of making my while loops repeat (revert to starting position)
+
+MachineIsOn = True
+While (MachineIsOn) {
+    eac = input('Hazchem code: ') ;
+    
+    // the only way I can think of taking a string and breaking it down would be by slicing it
+    if (eac[0] = '1') {  // I am not going to convert from string to int, I will instead keep it as a string and compare it to the string character for that numeric value.
+        print('FIREFIGHTING - Use Coarse Spray') ;
+    } 
+    else if (eac[0] = '2') {
+        print('FIREFIGHTING - Use Fine Spray') ;
+    }
+    else if (eac[0] = '3') {
+        print('FIREFIGHTING - Use Foam') ;
+    }
+    else {
+        print('FIREFIGHTING - Use Dry Agent') ;
+    }
+
+    // Now we want to issue a precaution statement if required 
+
+    if (eac[1] = 'P' OR 'S' OR 'W' OR 'Y') {
+        print('PRECAUTION - Substance is prone to violent or explosive reaction') ;
+    }
+
+    // we want to remain on EAC [index 1] to issue protective equipment instructions
+    if (eac[1] = 'P' OR 'R' OR 'W' OR 'X') {
+        print('CHEMICAL RISK - Wear liquid-tight suit/chemical protection clothing') ;
+    }
+    else {
+        print('TOXIC FUMES - Wear Breathing Aperatus / fire kit') ;
+    }
+
+    // focus on final eac index
+    if (eac[2] = 'E') {
+        print('PUBLIC SAFETY - Warn people to stay indoors with windows shut') ;
+    } 
+    else {
+        print('') // empty string
+    }
+
+    // do I need something to stop the loop from re-running immediately? 
+}

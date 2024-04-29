@@ -1,0 +1,61 @@
+/* 
+need to load a van with parcels
+the van can hold a maximum of 750kg
+there is an unlimited number of vans
+as each parcel arrives, weigh it and decide, to van or too heavy
+if too heavy, van leaves immediately
+parcel goes to next van 
+need to know the heaviest van that left and the weight it carried
+*/
+
+// Understand the problem - weigh the parcels, load the van, keep track of the heaviest van 
+
+// devise a plan
+/* 
+- set initial van weight to 0
+- set initial max weight to 0 
+- while there are parcels on the runway
+- - while van is less than max weight
+- - - weigh parcel
+- - - current weight + parcel weight
+- - - - if fits, load to van
+- - - - - current weight ++ 
+- - - - - if current weight is greater than max weight
+- - - - - - replace max weight with new number
+- - - - else new van
+- - end while (fill up van)
+- end while there are more parcels to load
+- provide details (max weight) of heaviest van that left today
+*/
+
+// carry out the plan 
+
+// starting variables
+vanLimit = 750 ;            // this is a constant really, but will allow us to modify for future vans
+currentVanWeight = 0 ;      // van weight, initialised at 0 (empty van)
+heaviestVan = 0 ;           // something to report to the boss
+
+// the following aren't really variables yet, as I would like to develop this into own function to ensure some randomness to the program
+currentParcelWeight = randomInteger(1 : 120) ;  // can't remember how to do a random integer at moment
+numberOfParcels = randomInteger(1 : 500) ;    // not really needed, just proposing a way of not knowing how many parcels there are in a day
+
+// the first while loop will run as long as there are parcels (the number of parcels to be defined randomly)
+numberOfParcels = [generate a random number of parcels] ;
+while (numberOfParcels NOT 0) {
+    numberOfParcels --1 ; // reduce the number of parcels to ensure loop eventually ends
+    currentParcelWeight = [random number between 1 & 120] ; // randomise the data coming in
+    
+    // the next while loop will continue until the van is full
+    while (currentVanWeight + currentParcelWeight < vanLimit) { 
+        currentVanWeight + currentParcelWeight ;            // creating a rolling current van weight
+        
+        // I now want a way of tracking my heaviest vans
+        if (currentVanWeight > heaviestVan) {
+            heaviestVan + currentVanWeight ;    // the first run will be 0 + van weight, this will only change when a heavier van is dispatched
+        }
+    }
+}
+
+// we now need to pull that heaviest van
+print('the heaviest van dispatched today was ' + heaviestVan + 'kg') ; 
+

@@ -1,0 +1,156 @@
+// think of some common actions a selfdriving vehicle must perform 
+
+// 1. (up) Hill Start /// decided to have just a simple pull-away as I massively overthought the process of observations
+// 2. UK style roundabout (nothing silly, Magic roundabout, you can go home!) 
+// 3. Exiting a slip-road to join the UK Motorway network
+
+// 1. Up-Hill Start (pull away from a roadside parking place)
+
+// Started with this, quickly giving up on it:
+
+IF the lane is clear 
+THEN 
+THEN (apply footbrake (brake 1) AND release parking break (break 2))
+
+// v2
+
+// activating the vehicle is beyond scope. Vehicle has been started.
+// vehicle is currently pointing up hill, and is on the left side of the road (UK) so will pull into flow of traffic rather than against it.
+// mirror-signal-manouver
+
+//variables 
+gear = {0:P, 1:R, 2:N, 3:D, 4:M1, 5:M2, 6:M3, 7:M4, 8:M5, 9:M6} ; // I'm proposing a dictionaryfor gears
+footBrake = False ;
+parkingBrake = True ;
+signalLeft = False ;
+signalRight = False ;
+
+
+// What data might we expect? 
+// response from Radar/Lidar, possible from camera directly? 
+// initial observation likely, followed by a sequence of delta observations I imagine
+// what changed, how quick did it change, how big is the thing that is changing (object size)
+
+// for my run, I will assume lidar/radar as primary form of vehicle 'eyes' 
+// I also imagine that this system is on indefinitely rather than activated for specific movements
+// but will try to consider sequence in this walk-thru
+
+get initialObservation ; // what does the world look like to a Lidar/Radar at scan-1
+initialObservation = 100 ; // can I do this as a way of measuring the delta? 
+newObservation = 0 ; // no change would be 100 - 0, therefore no delta, could that work?
+
+// I don't know how to express this, but I am imagining a 360deg radar divided into 100 measurements (simple) 
+// if a single 'section' changes then the score of 100 reduces by 1
+// this needs to be some kind of 3d array, 
+// see proposed scanning scores picture
+
+WHILE initialObservation = True ; // if false, fail closed, machine cannot move
+    get newObservation ; // we need to constantly check for changes against the initialObservation
+    deltaObservation = (initialObservation - newObservation) ;
+    IF deltaObservation = 100 ; // no change from original, then safe to go
+        THEN vehicleMoveForward() ; // a function for the actual moving part
+    ELSE deltaObservation < 100 ; // something has changed, we need to figure out what is changing and at what rate
+        THEN get newObservation ; // what changed
+
+
+        /////////////////
+
+// I did some more thinking about this and considered that the measure of observation and changes to observation would need to be an array of arrays
+
+//variables 
+gear = {0:P, 1:R, 2:N, 3:D, 4:M1, 5:M2, 6:M3, 7:M4, 8:M5, 9:M6} ; // I'm proposing a dictionaryfor gears
+footBrake = False ; // boolean
+parkingBrake = True ; // boolean
+accelerator = 0.0 ; // real number 0.0 to 1.0
+initialObservation = [[0.0, 0.0], [0.0, 0.0], [0.0, 0.0], [0.0, 0.0]] ; // on a scale of 0.0 to 1.0, real number within an array? 
+newObservation = [[0.0, 0.0], [0.0, 0.0], [0.0, 0.0], [0.0, 0.0]] ; // on a scale of 0.0 to 1.0
+deltaObservation = [[], [], [], []] ; // empty list
+// this gives me 4 corners to observe
+// actually measuring the observation will be beyond scope (and beyond me)
+// attached image to show how I imagine comparing observations
+// my expectation is that if there was a change, the score would change in one or more lists, getting closer to 1.0
+
+get initialObservation() ; // get that first scan
+// above will return an observation in format [[x,y], [x,y], [x,y], [x,y]]
+get newObservation() ; // immediately followed by another scan to see what is changing (if anything)
+// above will return a new observation in format [[x,y], [x,y], [x,y], [x,y]]
+
+deltaObservation = (initialObservation + newObservation) ; // what changed
+
+canWeMove = whatChanged(initialObservation, deltaObservation) ; // expect True/False response
+// do I need an If for this? 
+WHILE (canWeMove == True) ; 
+    vehicleMoveForward()
+
+FUNCTION vehicleMoveForward(deltaObservation, initialObservation) ; // what would we actually do to move... 
+    IF (deltaObservation == initialObservation) ; // no changes
+        footBrake = True ; // apply footbrake 
+        gear = 3 ; // don't know how to represent a dictionary selection in a pseudo code (or in python actually)
+        parkingBrake = False ; 
+        signalActivate(direction); // function to activate the indicator depending on direction of intent // pass direction (left/Right)
+        get newObservation() ; // I suppose this would actually need to be a call to a function
+        IF (deltaObservation == initialObservation) ; // no changes
+            accelerator = 0.1 ; 
+            
+            get newObservation() ; // check, check, check again
+            IF (deltaObservation == initialObservation) ; // no changes
+                accelerator - 0.2 ; 
+                footBrake = False ;
+                // somehow need to hand off the pulling away function to a 'drive safely function ?? 
+            ELSE whatChanged(initialObservation, deltaObservation) ; // hand off to a function that will identify what changed and where
+                // don't know how to finish this bit of the else... 
+            ENDIF
+        ELSE ; // the deltaObservation is greater than the initialObservation, then need to know what changed and where
+            whatChanged(initialObservation, deltaObservation) ; 
+    ELSE ; 
+    whatChanged(initialObservation, deltaObservation) ; 
+
+FUNCTION whatChanged(initialObservation, deltaObservation) ; // I'm probably over thinking this... 
+    //need to compare each list element from the delta against the initial 
+    frontRight = [initialObservation[0[0]], deltaObservation[0[0]]] ; // is that right? 
+    backRight = [initialObservation[0[1]], deltaObservation[0[1]]] ;
+    backLeft = [initialObservation[0[2]], deltaObservation[0[2]]] ;
+    frontLeft = [initialObservation[0[3]], deltaObservation[0[3]]] ;
+
+    IF (frontRight > [[0.0, 0.0], [0.0, 0.0]]) ; 
+        get newObservation() ; 
+        frontRightCheck = [deltaObservation[0[0]], newObservation[0[0]]] ; // anything else changed, if so what? 
+        If (frontRightCheck < frontRight) ; // something is moving towards us (we are 0,0, closer to 0 = closer to us)
+            THEN // 'The object is moving towards us, hold position, await further observations' ;
+            return False ; 
+        ELSE IF (frontRightCheck = frontRight) ; // no change
+            THEN // 'The object is no longer moving, hold position, await further observations' ;
+            return False ;
+        ELSE // only remaining option is that the frontRightCheck > frontRight then object moving away
+            THEN //  'The object is moving away from us, no longer an object of concern, proceed to next action'
+            return True ;
+        END IF
+    ELSE IF // we repeat the above but for checking the FRONT LEFT
+    ELSE IF // we repeat the above but for checking the BACK LEFT
+    ELSE IF // we repeat the above but for checking the BACK RIGHT
+
+    // on reflection, I suspect I did not need to do each check in an IF statement, furthermore, 
+    // this would likely need to be some kind of parallel processing, or at least all corners checked at the same time? 
+
+FUNCTION signalActivate(direction) ; // some method of activating the indicators as required
+    IF (direction = 'Right') ; 
+        signalRight = True ; // set the global variable
+    ELSE IF (direction = 'Left') ; 
+        signalLeft = True ; // global variable
+    ELSE ; // probably dont need this
+        break ; // return to main code
+    END IF
+
+
+    
+
+        
+
+
+
+
+
+
+
+
+

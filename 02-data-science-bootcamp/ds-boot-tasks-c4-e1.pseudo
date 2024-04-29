@@ -1,0 +1,68 @@
+// starting point = C3 pseudo
+
+install the machine
+turn on the power
+load the machine with snack items
+dispense the snacks
+show a snack dispensed report
+
+// now we will focus on dispensing individual snacks 
+
+// draft 1
+take user choice as an input (choice)
+compare input (choice) with item (selection)
+dispense item (selection) 
+update record (number items dispensed)
+
+// build it out, initialise some snacks
+
+// inidividual snacks
+itemOne = 'milk chocolate bar' ;
+itemTwo = 'muesli bar' ;
+itemThree = 'cheese puffs' ;
+itemFour = 'apple' ;
+itemFive = 'popcorn' ; 
+
+// need to initialise the dispensed count, currently I am assuming this happens daily, ASSUMPTION...
+DispensedItemOne = 0
+DispensedItemTwo = 0
+DispensedItemThree = 0
+DispensedItemFour = 0
+DispensedItemFive = 0
+
+// I can't quite get it in my head where the starting place is, so I am creating a while loop that will be true if the machine is on ??
+while (machineIsOn) {
+
+    // take user choice as an input
+    selection = input('Select an item') ;   // expected input will be a number, the keybad is numeric, no reason to check for errors? 
+
+    if (selection <= 5) {       // can I use nested if-statements?
+        if (selection = 1) {
+            dispense itemOne ;
+            DispensedItemOne + 1 ;      
+        } 
+        else if (selection = 2) {
+            dispense itemTwo ;
+            DispensedItemTwo + 1 ;
+        }
+        else if (selection = 3) {
+            dispense itemThree ;
+            DispensedItemThree + 1 ;
+        }
+        else if (selection = 4) {
+            dispense itemFour ;
+            DispensedItemFour + 1 ;
+        }
+        else {
+            dispense itemFive ;
+            DispensedItemFive + 1 ;
+        }
+    }   
+    else if (selection = 6) {    // lets get a report of dispensed items
+        print('One' + DispensedItemOne + ', Two' + DispensedItemTwo + ', Three' + DispensedItemThree + ', Four' + DispensedItemFour + ', Five' + DispensedItemFive) ;
+    }
+    else {
+        print('Invalid option')
+    }
+} // At this point I imagine the machine/display reverts to starting position, the machine is still on, therefore the loop remains True and the if statements can be followed sequentially
+

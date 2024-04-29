@@ -1,0 +1,53 @@
+/* Instructions for making coffee
+
+this will allow us to make a coffee */
+
+// initialization - set starting variables
+
+NumberCoffeeRequired = 0
+HowMuchCoffee = 0
+HowMuchWater = 0
+SugarLove = 0
+HowSweet = 0
+NumberAdded = 0
+MakeItCreamy = 0
+Cream = 0
+
+NumberCoffeeRequired = input(how many people want coffee?)
+HowMuchCoffee = NumberCoffeeRequired * 15 // in g (grams)
+HowMuchWater = HowMuchCoffee * 300 // in ml 
+
+// Setup the machine
+
+WaterHolder = HowMuchWater
+Add Filterpaper 
+Filterpaper + HowMuchCoffee
+MachineOn = True 
+WaitTime = HowMuchWater + HowMuchCoffee
+
+// who wants cream or sugar? 
+
+SugarLove = input(who wants sugar?)
+while (SugarLove)
+    HowSweet = input(how many sugars?)
+    While (NumberAdded < HowSweet)
+        NumberAdded + 1
+    end
+end
+
+MakeItCreamy = input(who wants creamer?)
+while (MakeItCreamy)
+    Cream + 1
+end
+
+// bring it all together (I still need to work on this section)
+
+Pour the coffee into mug
+Stir the coffee
+
+// turn off the machine
+
+MachineOn = False
+
+
+
